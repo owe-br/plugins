@@ -1,0 +1,13 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "app.featury/mcp",
+  "title": "featury",
+  "description": "Ask what your product does, triage requests and publish the changelog, from a map of your code.",
+  "version": "1.0.0",
+  "websiteUrl": "https://featury.app/en/docs/mcp",
+  "icons": [
+    { "src": "https://featury.app/icon-512.png", "mimeType": "image/png", "sizes": ["512x512"] },
+    { "src": "https://featury.app/favicon.svg", "mimeType": "image/svg+xml", "sizes": ["any"] }
+  ],
+  "remotes": [{ "type": "streamable-http", "url": "https://api.featury.app/mcp" }]
+}

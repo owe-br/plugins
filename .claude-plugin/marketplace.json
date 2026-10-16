@@ -1,0 +1,17 @@
+{
+  "name": "owe-br",
+  "owner": {
+    "name": "Gustavo Salomé",
+    "email": "gustavonips@gmail.com",
+    "url": "https://github.com/owe-br"
+  },
+  "description": "Plugins for owe-br's products: each one teaches the agent a product's workflows and connects it to that product's MCP server.",
+  "plugins": [
+    {
+      "name": "featury",
+      "source": "./plugins/featury",
+      "description": "Triage your product's requests, see what shipped and what's being built, and run its public changelog.",
+      "category": "productivity"
+    }
+  ]
+}

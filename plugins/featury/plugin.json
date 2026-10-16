@@ -1,0 +1,45 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "featury",
+  "version": "1.0.0",
+  "description": "Triage your product's requests, see what shipped and what's being built, and run its public changelog.",
+  "author": {
+    "name": "Gustavo Salomé",
+    "email": "gustavonips@gmail.com",
+    "url": "https://featury.app"
+  },
+  "homepage": "https://featury.app/en/docs/mcp",
+  "repository": "https://github.com/owe-br/plugins",
+  "license": "MIT",
+  "keywords": ["featury", "requests", "changelog", "triage", "feedback"],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "featury",
+        "shortDescription": "Requests, map and changelog",
+        "longDescription": "featury reads your code and keeps a map of what your product does, what shipped and what is being built. Ask what a feature does or whether it exists, triage the requests your team and customers send, file new ones, and draft or publish the product's public changelog. Every tool acts as you, with your permissions in each organization you belong to.",
+        "developerName": "Gustavo Salomé",
+        "category": "Productivity",
+        "capabilities": [
+          "Triage and update product requests",
+          "Answer what the product does and what shipped",
+          "See what is being built right now",
+          "Draft and publish the public changelog"
+        ],
+        "websiteURL": "https://featury.app",
+        "supportURL": "https://featury.app/en/docs/mcp",
+        "privacyPolicyURL": "https://featury.app/en/privacy",
+        "termsOfServiceURL": "https://featury.app/en/terms",
+        "defaultPrompt": [
+          "What did we ship this week?",
+          "Triage the new requests on my board.",
+          "Does the product already let people export to CSV?"
+        ],
+        "brandColor": "#5762cf",
+        "brandColorDark": "#abb2f1",
+        "composerIcon": "./assets/logo.png",
+        "logo": "./assets/logo.png"
+      }
+    }
+  }
+}

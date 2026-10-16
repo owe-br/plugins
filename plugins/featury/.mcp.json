@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "featury": {
+      "type": "http",
+      "url": "https://api.featury.app/mcp"
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "featury",
+  "displayName": "featury",
+  "version": "1.0.0",
+  "description": "Triage your product's requests, see what shipped and what's being built, and run its public changelog.",
+  "author": {
+    "name": "Gustavo Salomé",
+    "email": "gustavonips@gmail.com",
+    "url": "https://featury.app"
+  },
+  "homepage": "https://featury.app/en/docs/mcp",
+  "repository": "https://github.com/owe-br/plugins",
+  "license": "MIT",
+  "keywords": ["featury", "requests", "changelog", "triage", "feedback"],
+  "icon": "./assets/logo.png",
+  "documentationUrl": "https://featury.app/en/docs/mcp",
+  "privacyPolicyUrl": "https://featury.app/en/privacy",
+  "termsOfServiceUrl": "https://featury.app/en/terms"
+}

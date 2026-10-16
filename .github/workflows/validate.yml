@@ -1,0 +1,52 @@
+# The stores refuse a plugin whose manifest they can't read, so every manifest is checked before it
+# reaches them: Claude's files with warnings as failures, the Agent Plugins files (what ChatGPT,
+# Codex and Cursor read) against the spec's schemas, and each MCP Registry entry by the registry.
+name: Validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+env:
+  AGENT_PLUGINS_SCHEMAS: https://agent-plugins.org/schemas/1.0.0
+  MCP_PUBLISHER: https://github.com/modelcontextprotocol/registry/releases/download/v1.8.1
+
+jobs:
+  validate:
+    runs-on: ${{ vars.CI_RUNNER || 'ubuntu-24.04' }}
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - name: Install the checkers
+        run: |
+          npm install -g @anthropic-ai/claude-code@2.1.301
+          npm install --no-save --no-package-lock ajv-cli@5 ajv-formats@3
+          arch=$(uname -m | sed 's/x86_64/amd64/; s/aarch64/arm64/')
+          curl -fsSL "$MCP_PUBLISHER/mcp-publisher_linux_$arch.tar.gz" | tar xz mcp-publisher
+          curl -fsSL "$AGENT_PLUGINS_SCHEMAS/plugin.schema.json" -o "$RUNNER_TEMP/plugin.schema.json"
+          curl -fsSL "$AGENT_PLUGINS_SCHEMAS/mcp.schema.json" -o "$RUNNER_TEMP/mcp.schema.json"
+      # `claude plugin validate` reads files only: no login, no network.
+      - name: Claude marketplace
+        run: claude plugin validate --strict .
+      - name: Each plugin
+        run: |
+          for dir in plugins/*/; do
+            claude plugin validate --strict "$dir"
+            npx ajv validate --spec=draft2020 --strict=false -c ajv-formats \
+              -s "$RUNNER_TEMP/plugin.schema.json" -d "${dir}plugin.json"
+            npx ajv validate --spec=draft2020 --strict=false -c ajv-formats \
+              -s "$RUNNER_TEMP/mcp.schema.json" -d "${dir}mcp.json"
+          done
+      # The registry checks the file itself, so this step needs the network but no login.
+      - name: Each MCP Registry entry
+        run: |
+          for file in registry/*/server.json; do
+            ./mcp-publisher validate "$file"
+          done
