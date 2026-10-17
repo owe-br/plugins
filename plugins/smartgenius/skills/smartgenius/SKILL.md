@@ -25,7 +25,7 @@ Two facts shape every call:
    a `requestId` you make up (a new UUID). Optional: `format` (`carousel` by default, `post` or
    `story`), `slides` (carousel only), `objective`, `tone`, `cta`, and `links` (up to 5 pages SmartGenius
    reads before planning). It answers at once with the post's `id`, before anything is drawn.
-3. `get_post` with `profile`, `id` and `wait: 30`. Repeat while `making.status` is `queued` or
+3. `get_post` with `profile`, `postId` (that `id`) and `wait: 30`. Repeat while `making.status` is `queued` or
    `running`. A carousel takes a few minutes; tell the user it is on its way instead of going
    quiet.
 4. When it is `done`, show the user the slides' text, the caption and the `studioUrl`. If it

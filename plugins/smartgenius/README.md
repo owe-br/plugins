@@ -52,6 +52,7 @@ generated image. A failed image doesn't count. Download links for generated imag
 ## Links
 
 - Setup guide and tool list: https://smartgenius.app/en/docs
+- What to try, and what should be refused: [TESTING.md](TESTING.md)
 - Privacy: https://smartgenius.app/en/privacidade
 - Terms: https://smartgenius.app/en/termos
 - Help: info@olhary.ai
