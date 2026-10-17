@@ -44,6 +44,7 @@ approve from any device where you are signed in to featury.
 ## Links
 
 - Setup guide and tool list: https://featury.app/en/docs/mcp
+- What to try, and what should be refused: [TESTING.md](TESTING.md)
 - Privacy when you connect an AI app: https://featury.app/en/privacy/ai-apps
 - Terms: https://featury.app/en/terms
 - Help: gustavo@openwings.com.br
