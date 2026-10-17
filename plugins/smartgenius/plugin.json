@@ -1,0 +1,45 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "smartgenius",
+  "version": "1.0.0",
+  "description": "Make Instagram posts, carousels and stories for your profiles, and draw images in your brand's style or from any prompt.",
+  "author": {
+    "name": "Gustavo Salomé",
+    "email": "gustavonips@gmail.com",
+    "url": "https://smartgenius.app"
+  },
+  "homepage": "https://smartgenius.app/en/docs",
+  "repository": "https://github.com/owe-br/plugins",
+  "license": "MIT",
+  "keywords": ["smartgenius", "instagram", "social media", "carousel", "images"],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "SmartGenius",
+        "shortDescription": "Instagram posts and brand images",
+        "longDescription": "SmartGenius is a social media manager for Instagram. Ask it for a post, a carousel or a story for one of your profiles, and it plans the slides, writes the text and caption, and draws each image in that profile's voice and visual style. It can also draw images from any prompt. Every post lands as a draft: you approve, schedule or publish it yourself in the SmartGenius studio.",
+        "developerName": "Gustavo Salomé",
+        "category": "Design",
+        "capabilities": [
+          "Draft Instagram posts, carousels and stories",
+          "Draw images in a profile's visual style",
+          "Draw images from any prompt",
+          "Check how many images are left this month"
+        ],
+        "websiteURL": "https://smartgenius.app",
+        "supportURL": "https://smartgenius.app/en/docs",
+        "privacyPolicyURL": "https://smartgenius.app/en/privacidade",
+        "termsOfServiceURL": "https://smartgenius.app/en/termos",
+        "defaultPrompt": [
+          "Make a carousel about our new menu for my Instagram.",
+          "Draw a square image of a coffee cup in my brand's style.",
+          "How many images do I have left this month?"
+        ],
+        "brandColor": "#cc3e24",
+        "brandColorDark": "#ee9a86",
+        "composerIcon": "./assets/logo.png",
+        "logo": "./assets/logo.png"
+      }
+    }
+  }
+}

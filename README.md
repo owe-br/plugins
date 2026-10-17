@@ -3,9 +3,10 @@
 Plugins for owe-br's products. Each one connects your agent to a product's MCP server and
 teaches it that product's workflows with a skill.
 
-| Plugin                     | What it does                                                                                           |
-| -------------------------- | ------------------------------------------------------------------------------------------------------ |
-| [featury](plugins/featury) | Triage your product's requests, see what shipped and what's being built, and run its public changelog. |
+| Plugin                             | What it does                                                                                           |
+| ---------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| [featury](plugins/featury)         | Triage your product's requests, see what shipped and what's being built, and run its public changelog. |
+| [smartgenius](plugins/smartgenius) | Make Instagram posts, carousels and stories for your profiles, and draw images in your brand's style.  |
 
 ## Install
 

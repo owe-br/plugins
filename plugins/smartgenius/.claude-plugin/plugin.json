@@ -1,0 +1,20 @@
+{
+  "name": "smartgenius",
+  "displayName": "SmartGenius",
+  "version": "1.0.0",
+  "description": "Make Instagram posts, carousels and stories for your profiles, and draw images in your brand's style or from any prompt.",
+  "author": {
+    "name": "Gustavo Salomé",
+    "email": "gustavonips@gmail.com",
+    "url": "https://smartgenius.app"
+  },
+  "homepage": "https://smartgenius.app/en/docs",
+  "repository": "https://github.com/owe-br/plugins",
+  "license": "MIT",
+  "keywords": ["smartgenius", "instagram", "social media", "carousel", "images"],
+  "icon": "./assets/logo.png",
+  "documentationUrl": "https://smartgenius.app/en/docs",
+  "privacyPolicyUrl": "https://smartgenius.app/en/privacidade",
+  "termsOfServiceUrl": "https://smartgenius.app/en/termos",
+  "supportUrl": "https://github.com/owe-br/plugins/issues"
+}

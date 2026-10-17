@@ -1,0 +1,13 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "app.smartgenius/smartgenius",
+  "title": "SmartGenius",
+  "description": "Draft Instagram posts, carousels and stories, and draw images in your brand's style.",
+  "version": "1.0.0",
+  "websiteUrl": "https://smartgenius.app/en/docs",
+  "icons": [
+    { "src": "https://smartgenius.app/icon.png", "mimeType": "image/png", "sizes": ["512x512"] },
+    { "src": "https://smartgenius.app/icon.svg", "mimeType": "image/svg+xml", "sizes": ["any"] }
+  ],
+  "remotes": [{ "type": "streamable-http", "url": "https://api.smartgenius.app/mcp" }]
+}

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  SmartGenius — icon only (square), the single master for every surface.
+  Source for favicon / app icon / PWA tile / social avatar; `bun run icons`
+  stamps it bare and onto the white tile (BRAND.background).
+
+  The mark: a grade — the feed's own 3×3 grid of slots, ink, with the NEXT
+  slot in vermelhão. Newest posts land top-left on Instagram, so that is the
+  slot that is red: "the next post goes here" is the whole product in one
+  picture (DESIGN.md, the next-slot signature). Cells are 28 on an 8 gap
+  (0 / 36 / 72), square-cornered like the feed's own cells.
+
+  At 16px the survivors are: nine squares and one red one.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="SmartGenius">
+  <rect x="0" y="0" width="28" height="28" fill="#CC3E24"/>
+  <rect x="36" y="0" width="28" height="28" fill="#141414"/>
+  <rect x="72" y="0" width="28" height="28" fill="#141414"/>
+  <rect x="0" y="36" width="28" height="28" fill="#141414"/>
+  <rect x="36" y="36" width="28" height="28" fill="#141414"/>
+  <rect x="72" y="36" width="28" height="28" fill="#141414"/>
+  <rect x="0" y="72" width="28" height="28" fill="#141414"/>
+  <rect x="36" y="72" width="28" height="28" fill="#141414"/>
+  <rect x="72" y="72" width="28" height="28" fill="#141414"/>
+</svg>

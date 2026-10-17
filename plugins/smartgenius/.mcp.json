@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "smartgenius": {
+      "type": "http",
+      "url": "https://api.smartgenius.app/mcp"
+    }
+  }
+}

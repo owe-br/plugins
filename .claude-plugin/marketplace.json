@@ -12,6 +12,12 @@
       "source": "./plugins/featury",
       "description": "Triage your product's requests, see what shipped and what's being built, and run its public changelog.",
       "category": "productivity"
+    },
+    {
+      "name": "smartgenius",
+      "source": "./plugins/smartgenius",
+      "description": "Make Instagram posts, carousels and stories for your profiles, and draw images in your brand's style or from any prompt.",
+      "category": "design"
     }
   ]
 }
