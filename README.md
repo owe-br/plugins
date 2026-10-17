@@ -7,6 +7,7 @@ teaches it that product's workflows with a skill.
 | ---------------------------------- | ------------------------------------------------------------------------------------------------------ |
 | [featury](plugins/featury)         | Triage your product's requests, see what shipped and what's being built, and run its public changelog. |
 | [smartgenius](plugins/smartgenius) | Make Instagram posts, carousels and stories for your profiles, and draw images in your brand's style.  |
+| [whatsapi](plugins/whatsapi)       | Send WhatsApp messages from your own numbers, read and answer your chats, and send sign-in codes.      |
 
 ## Install
 

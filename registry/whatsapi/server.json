@@ -1,0 +1,13 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "sh.whatsapi/whatsapi",
+  "title": "whatsapi.sh",
+  "description": "Send WhatsApp messages from your own numbers, read and answer chats, and send sign-in codes.",
+  "version": "1.0.0",
+  "websiteUrl": "https://docs.whatsapi.sh/en/mcp",
+  "icons": [
+    { "src": "https://whatsapi.sh/icon.png", "mimeType": "image/png", "sizes": ["512x512"] },
+    { "src": "https://whatsapi.sh/icon.svg", "mimeType": "image/svg+xml", "sizes": ["any"] }
+  ],
+  "remotes": [{ "type": "streamable-http", "url": "https://api.whatsapi.sh/mcp" }]
+}

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  whatsapi.sh — icon only (square), the single master for every surface.
+  Source for favicon / app icon / PWA tile / social avatar; `bun run icons`
+  stamps it bare and onto the nectar-gold tile (BRAND.background).
+
+  The mark: a entrega — o colibri in full flight, carrying the visitor's
+  message at the beak tip ("manda que o colibri entrega" as one picture).
+  The bird is the mural's flight grammar at mark scale: teardrop body
+  tapering to the tail's point, wing fan swept up-back, two-prong tail
+  streaming behind, the icon head's forest face block and content closed
+  eye. The bubble is PAPER with the ink outline and message lines — the
+  brightest shape in the mark, the message itself — and its tail tip meets
+  the needle beak: bird and message, connected, moving right.
+
+  At 16px the survivors are: the emerald mass (bird), the paper bubble, the
+  dark beak-notch between them. Amended 2026-08-25 from the mid-sip head
+  when the hero mural became a entrega (street-tested decision, Gus).
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="whatsapi">
+  <g transform="translate(0 10)">
+    <!-- the message: paper bubble, ink outline, tail tip at the beak -->
+    <path d="M57 53 Q59 46 63 42 Q63 30 74 30 L86 30 Q94 30 94 40 L94 50 Q94 60 86 60 L74 60 Q64 60 62 55 Q59 55 57 53 Z" fill="#FFFDF7" stroke="#26201A" stroke-width="2.6" stroke-linejoin="round"/>
+    <rect x="70" y="38" width="16" height="3.4" rx="1.7" fill="#26201A" opacity="0.35"/>
+    <rect x="70" y="44" width="11" height="3.4" rx="1.7" fill="#26201A" opacity="0.35"/>
+    <!-- tail prongs streaming back -->
+    <path d="M22 50 Q12 47 2 47 Q10 52 15 52 Q10 57 6 62 Q14 60 19 55 Q21 52 22 50 Z" fill="#14532D"/>
+    <!-- wing fan, swept up-back mid-downstroke -->
+    <path d="M34 54 Q26 42 18 36 Q14 33 10 32 Q13 38 13 44 Q14 51 20 55 Q27 59 34 54 Z" fill="#1E7A4E" opacity="0.45"/>
+    <path d="M38 51 Q31 39 23 32 Q19 28 15 26 Q17 32 17 38 Q18 45 24 50 Q31 55 38 51 Z" fill="#4BA472"/>
+    <path d="M42 48 Q38 32 31 21 Q27 15 22 11 Q24 18 24 25 Q25 34 31 41 Q37 47 42 48 Z" fill="#4BA472"/>
+    <!-- body: teardrop, round head right, taper to the tail point -->
+    <path d="M40 42 Q50 44 53 52 Q54 60 47 64 Q38 68 28 66 Q16 63 8 55 Q14 51 22 49 Q31 45 40 42 Z" fill="#1E7A4E"/>
+    <!-- the face painted on: forest block on the beak side -->
+    <path d="M41 41 Q50 44 53 52 Q54 58 50 62 Q46 64 43 61 Q46 51 41 41 Z" fill="#14532D"/>
+    <!-- one content closed eye, paper stroke on the face block -->
+    <path d="M43 51 Q46 48 49 51" stroke="#FFFDF7" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+    <!-- the needle beak, tip meeting the bubble's tail tip -->
+    <path d="M44 55 Q50 55 57 54 L57 57 Q50 58 44 57 Z" fill="#26201A"/>
+  </g>
+</svg>

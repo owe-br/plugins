@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "whatsapi": {
+      "type": "http",
+      "url": "https://api.whatsapi.sh/mcp"
+    }
+  }
+}

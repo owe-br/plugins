@@ -1,0 +1,45 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "whatsapi",
+  "version": "1.0.0",
+  "description": "Send WhatsApp messages from your own numbers, read and answer your chats, and send sign-in codes.",
+  "author": {
+    "name": "Gustavo Salomé",
+    "email": "gustavonips@gmail.com",
+    "url": "https://whatsapi.sh"
+  },
+  "homepage": "https://docs.whatsapi.sh/en/mcp",
+  "repository": "https://github.com/owe-br/plugins",
+  "license": "MIT",
+  "keywords": ["whatsapp", "messages", "chat", "otp", "whatsapi"],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "whatsapi.sh",
+        "shortDescription": "WhatsApp from your own numbers",
+        "longDescription": "whatsapi.sh links your own WhatsApp numbers the way WhatsApp Web does, and lets your agent use them. Read a chat and answer it, send a message, photo, file or location, send and check sign-in codes, see whether a phone is on WhatsApp, and pair a new number with a QR code. Messages to people who haven't written in the last 24 hours wait in a queue and leave a few minutes apart, which keeps the number from sending like a machine.",
+        "developerName": "Gustavo Salomé",
+        "category": "Communication",
+        "capabilities": [
+          "Read and answer WhatsApp chats",
+          "Send messages, media, locations and contacts",
+          "Send and check sign-in codes",
+          "Pair a WhatsApp number and check its status"
+        ],
+        "websiteURL": "https://whatsapi.sh",
+        "supportURL": "https://docs.whatsapi.sh/en/mcp",
+        "privacyPolicyURL": "https://whatsapi.sh/en/privacy/ai-apps",
+        "termsOfServiceURL": "https://whatsapi.sh/en/terms",
+        "defaultPrompt": [
+          "What are the latest messages in my WhatsApp chats?",
+          "Answer Maria on WhatsApp that the order ships tomorrow.",
+          "Is my WhatsApp number still connected?"
+        ],
+        "brandColor": "#176441",
+        "brandColorDark": "#65C792",
+        "composerIcon": "./assets/logo.png",
+        "logo": "./assets/logo.png"
+      }
+    }
+  }
+}

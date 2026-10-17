@@ -18,6 +18,12 @@
       "source": "./plugins/smartgenius",
       "description": "Make Instagram posts, carousels and stories for your profiles, and draw images in your brand's style or from any prompt.",
       "category": "design"
+    },
+    {
+      "name": "whatsapi",
+      "source": "./plugins/whatsapi",
+      "description": "Send WhatsApp messages from your own numbers, read and answer your chats, and send sign-in codes.",
+      "category": "communication"
     }
   ]
 }
