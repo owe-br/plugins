@@ -31,7 +31,8 @@ codex plugin add featury@owe-br
 ## Sign in
 
 In Claude Code, type `/mcp`, pick featury and choose Authenticate. In Codex, run
-`codex mcp login featury`.
+`codex mcp login featury`. This needs Codex 0.147 or later: older versions stop with "missing
+required issuer". Update with `npm install -g @openai/codex@latest`, then sign in again.
 
 Your browser opens featury: check the app's name and the address it sends you back to, then press
 Connect. That makes an API key named after the app. It is listed under Account → API keys, where
