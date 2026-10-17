@@ -1,6 +1,6 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
-  "name": "app.featury/mcp",
+  "name": "app.featury/featury",
   "title": "featury",
   "description": "Ask what your product does, triage requests and publish the changelog, from a map of your code.",
   "version": "1.0.0",
