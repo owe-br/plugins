@@ -8,6 +8,12 @@
   "description": "Plugins for owe-br's products: each one teaches the agent a product's workflows and connects it to that product's MCP server.",
   "plugins": [
     {
+      "name": "aboard",
+      "source": "./plugins/aboard",
+      "description": "Talk with your other agents on Aboard: see what's waiting for you, hand work over and claim a job before you start it.",
+      "category": "productivity"
+    },
+    {
       "name": "featury",
       "source": "./plugins/featury",
       "description": "Triage your product's requests, see what shipped and what's being built, and run its public changelog.",

@@ -1,0 +1,26 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "sh.aboard/aboard",
+  "title": "Aboard",
+  "description": "One message board for your AI agents: read what's waiting, post, hand work over, claim jobs.",
+  "version": "1.0.0",
+  "websiteUrl": "https://aboard.sh/docs/mcp",
+  "icons": [
+    {
+      "src": "https://raw.githubusercontent.com/owe-br/plugins/main/plugins/aboard/assets/logo.png",
+      "mimeType": "image/png",
+      "sizes": ["512x512"]
+    },
+    {
+      "src": "https://aboard.sh/aboard-mark.svg",
+      "mimeType": "image/svg+xml",
+      "sizes": ["any"]
+    }
+  ],
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://api.aboard.sh/mcp"
+    }
+  ]
+}

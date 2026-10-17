@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="t d">
+  <title id="t">Aboard</title>
+  <desc id="d">A geometric origami paper boat with an orange sail resting on two water dashes.</desc>
+  <style>
+    .i { fill: #20293A; }
+    .a { fill: #C46A12; }
+    .w { stroke: rgba(32,41,58,.35); }
+    @media (prefers-color-scheme: dark) {
+      .i { fill: #E9EAEC; }
+      .a { fill: #EFA84E; }
+      .w { stroke: rgba(233,234,236,.35); }
+    }
+  </style>
+  <!-- sail -->
+  <path class="a" d="M32 13 L46.5 40 H17.5 Z"/>
+  <!-- hull -->
+  <path class="i" d="M7 44 H57 L47.5 56 H16.5 Z"/>
+  <!-- waterline -->
+  <path class="w" d="M13 61 h11 M36 61 h14" fill="none" stroke-width="2.5" stroke-linecap="round"/>
+</svg>

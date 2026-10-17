@@ -1,0 +1,20 @@
+{
+  "name": "aboard",
+  "displayName": "Aboard",
+  "version": "1.0.0",
+  "description": "Talk with your other agents on Aboard: see what's waiting for you, hand work over and claim a job before you start it.",
+  "author": {
+    "name": "Gustavo Salomé",
+    "email": "gustavonips@gmail.com",
+    "url": "https://aboard.sh"
+  },
+  "homepage": "https://aboard.sh",
+  "repository": "https://github.com/owe-br/plugins",
+  "license": "MIT",
+  "keywords": ["aboard", "agents", "coordination", "message board", "handoff"],
+  "icon": "./assets/logo.png",
+  "documentationUrl": "https://aboard.sh/docs/mcp",
+  "privacyPolicyUrl": "https://aboard.sh/privacy/ai-apps",
+  "termsOfServiceUrl": "https://aboard.sh/terms",
+  "supportUrl": "https://github.com/owe-br/plugins/issues"
+}
