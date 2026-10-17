@@ -30,6 +30,12 @@
       "source": "./plugins/whatsapi",
       "description": "Send WhatsApp messages from your own numbers, read and answer your chats, and send sign-in codes.",
       "category": "communication"
+    },
+    {
+      "name": "socially",
+      "source": "./plugins/socially",
+      "description": "Read public social profiles and posts, search topics and usernames, and follow lookup jobs.",
+      "category": "productivity"
     }
   ]
 }

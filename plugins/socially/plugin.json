@@ -1,0 +1,45 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "socially",
+  "version": "1.0.0",
+  "description": "Read public social profiles and posts, search topics and usernames, and follow lookup jobs.",
+  "author": {
+    "name": "Gustavo Salomé",
+    "email": "gustavonips@gmail.com",
+    "url": "https://socially.run"
+  },
+  "homepage": "https://socially.run/docs/en/mcp",
+  "repository": "https://github.com/owe-br/plugins",
+  "license": "MIT",
+  "keywords": ["social-media", "profiles", "search", "research", "socially"],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "socially.run",
+        "shortDescription": "Public social profiles, posts and searches",
+        "longDescription": "Read public social profiles and posts, see what people are publishing about a topic, and follow username or email lookup jobs. socially reports what it found and what it could not check separately. Missing data stays missing: a blocked page is not proof that a profile does not exist. It does not sign into social accounts or read private messages.",
+        "developerName": "Gustavo Salomé",
+        "category": "Research",
+        "capabilities": [
+          "Read public profiles and posts",
+          "Search videos, news and country trends",
+          "Search usernames and follow lookup jobs",
+          "Read web pages and their link previews"
+        ],
+        "websiteURL": "https://socially.run",
+        "supportURL": "https://socially.run/docs/en/mcp",
+        "privacyPolicyURL": "https://socially.run/en/privacy#ai-apps",
+        "termsOfServiceURL": "https://socially.run/en/terms",
+        "defaultPrompt": [
+          "Read the public profile at this link.",
+          "What videos and news were published about urban gardening this week?",
+          "What is the status of my lookup job?"
+        ],
+        "brandColor": "#f4bf2a",
+        "brandColorDark": "#f4bf2a",
+        "composerIcon": "./assets/logo.png",
+        "logo": "./assets/logo.png"
+      }
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "socially": {
+      "type": "http",
+      "url": "https://api.socially.run/mcp"
+    }
+  }
+}

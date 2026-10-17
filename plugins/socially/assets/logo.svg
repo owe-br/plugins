@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="socially">
+  <path d="M11 19 H84 L92 27 V34 Q92 37 89 37 H11 Q8 37 8 34 V22 Q8 19 11 19 Z" fill="#F6F6F4"/>
+  <circle cx="20" cy="69" r="12" fill="#7D7D78"/>
+  <circle cx="50" cy="69" r="12" fill="#F4BF2A"/>
+  <circle cx="80" cy="69" r="12" fill="#7D7D78"/>
+</svg>
