@@ -34,5 +34,10 @@ Each plugin's README says how to sign in.
 - `registry/<name>/server.json` lists the plugin's MCP server in the
   [MCP Registry](https://registry.modelcontextprotocol.io).
 
+Both stores ask each plugin for a privacy policy that says what the agent can see, who receives
+it, how long it is kept and how to stop it. A product with a website publishes it there as its
+own page (featury's is https://featury.app/en/privacy/ai-apps). A plugin without one keeps a
+`PRIVACY.md` in its folder, and its manifests link to that file.
+
 Every push checks the Claude files with `claude plugin validate --strict`, the Agent Plugins files
 against the spec's schemas, and each registry entry with `mcp-publisher validate`.
