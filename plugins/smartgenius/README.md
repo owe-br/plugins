@@ -38,8 +38,11 @@ In Claude Code, type `/mcp`, pick smartgenius and choose Authenticate. In Codex,
 `npm install -g @openai/codex@latest`).
 
 Your browser opens SmartGenius: check the app's name and the address it sends you back to, then
-press Connect. That makes an API key named after the app. A workspace admin sees it under API and
+press Allow. That makes an API key named after the app. A workspace admin sees it under API and
 MCP in the workspace menu and can revoke it there at any time.
+
+Only an admin of the workspace can connect an app to it. Anyone else is asked to have an admin do
+it.
 
 No browser on the machine? Make an API key under API and MCP in the workspace menu and give it
 to your agent instead.
@@ -53,6 +56,7 @@ generated image. A failed image doesn't count. Download links for generated imag
 
 - Setup guide and tool list: https://smartgenius.app/en/docs
 - What to try, and what should be refused: [TESTING.md](TESTING.md)
-- Privacy: https://smartgenius.app/en/privacidade
+- Privacy when you connect an AI app: https://smartgenius.app/en/privacidade/apps-de-ia
+- Privacy policy: https://smartgenius.app/en/privacidade
 - Terms: https://smartgenius.app/en/termos
 - Help: info@olhary.ai

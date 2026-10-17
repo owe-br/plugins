@@ -76,10 +76,14 @@ back with `isError: true`. Act on the code:
 
 ## Signing in
 
-Claude, ChatGPT, Codex and other clients that support MCP sign-in need nothing from you: given
-`https://api.smartgenius.app/mcp`, they open SmartGenius's own page and the user says yes there.
-That makes a key named after the app, which a workspace admin can revoke under API and MCP in
-the workspace menu.
+Claude, ChatGPT and other clients that support MCP sign-in need nothing from you: given
+`https://api.smartgenius.app/mcp`, they open SmartGenius's own page and the user presses Allow
+there. In Codex, the user runs `codex mcp login smartgenius` (Codex 0.147 or later). Either way
+SmartGenius makes a key named after the app, which a workspace admin can revoke under API and MCP
+in the workspace menu.
+
+Only an admin of the Espaço can connect an app. Anyone else sees a page that says so: tell them to
+ask an admin of their Espaço to connect it, or to make them an admin.
 
 Where no browser can come back to you (a server, a container, an SSH session), ask the user for
 an API key instead. A workspace admin makes one under API and MCP in the workspace menu; send it

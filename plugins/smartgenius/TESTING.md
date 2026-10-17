@@ -15,10 +15,11 @@ The account can't see any other Espaço.
 ## Sign in
 
 1. Install the plugin (see [README.md](README.md)).
-2. Claude Code: type `/mcp`, pick smartgenius, choose Authenticate. Codex: `codex mcp login
-smartgenius` (Codex 0.147 or later). ChatGPT: add the connector, then press Connect.
+2. Claude Code: type `/mcp`, pick smartgenius, choose Authenticate. Codex: run
+   `codex mcp login smartgenius` (Codex 0.147 or later). ChatGPT: add the connector, then press
+   Connect.
 3. SmartGenius opens in your browser. Sign in with the test account, check the app's name and the
-   address it returns to, and press Connect.
+   address it returns to, and press Allow.
 
 To disconnect, revoke the key named after the app under API and MCP in the workspace menu on
 my.smartgenius.app.
