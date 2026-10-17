@@ -15,5 +15,6 @@
   "icon": "./assets/logo.png",
   "documentationUrl": "https://featury.app/en/docs/mcp",
   "privacyPolicyUrl": "https://featury.app/en/privacy/ai-apps",
-  "termsOfServiceUrl": "https://featury.app/en/terms"
+  "termsOfServiceUrl": "https://featury.app/en/terms",
+  "supportUrl": "https://github.com/owe-br/plugins/issues"
 }
