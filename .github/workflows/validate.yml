@@ -44,6 +44,19 @@ jobs:
             npx ajv validate --spec=draft2020 --strict=false -c ajv-formats \
               -s "$RUNNER_TEMP/mcp.schema.json" -d "${dir}mcp.json"
           done
+      # OpenAI's auth extension is not in the portable schema. Check each part separately.
+      - name: OpenAI upload packages
+        run: |
+          for dir in plugins/*/; do
+            name=$(basename "$dir")
+            checks="$RUNNER_TEMP/openai/$name"
+            python3 -I scripts/export-openai.py "$name" \
+              --output "$RUNNER_TEMP/openai/$name.zip" --validation-dir "$checks"
+            npx ajv validate --spec=draft2020 --strict=false -c ajv-formats \
+              -s "$RUNNER_TEMP/mcp.schema.json" -d "$checks/transport.json"
+            npx ajv validate --spec=draft2020 \
+              -s schemas/openai-oauth.schema.json -d "$checks/auth-*.json"
+          done
       # The registry checks the file itself, so this step needs the network but no login.
       - name: Each MCP Registry entry
         run: |

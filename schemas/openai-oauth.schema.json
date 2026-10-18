@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OpenAI OAuth upload profile",
+  "$comment": "This repo's supported profile, not a full OpenAI schema. Source: https://developers.openai.com/plugins/build/plugins#configure-mcp-authentication. CIMD keeps the DCR fallback. Credentials and endpoint overrides are not needed.",
+  "const": {
+    "com.openai": {
+      "auth": {
+        "type": "oauth",
+        "client": { "mode": "cimd" }
+      }
+    }
+  }
+}

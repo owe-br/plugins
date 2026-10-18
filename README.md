@@ -29,6 +29,41 @@ codex plugin add featury@owe-br
 
 Each plugin's README says how to sign in.
 
+## Build an OpenAI upload
+
+```sh
+python3 scripts/export-openai.py featury
+```
+
+This writes `dist/featury-openai-plugin.zip`. Use another plugin name to build its ZIP, or
+`--output <path>` to choose where it goes. The exporter reads the committed plugin files at `HEAD`,
+not uncommitted edits. Commit plugin changes before exporting. It never copies untracked files,
+environment files or key files.
+
+All current plugins use OAuth remote servers. The ZIP adds OpenAI's
+[documented authentication settings](https://developers.openai.com/plugins/build/plugins#configure-mcp-authentication)
+to each server: `extensions["com.openai"].auth` selects `oauth` with `client.mode: "cimd"`.
+CIMD lets the client identify itself with a metadata document; dynamic client registration stays
+available as a fallback. The server supplies the OAuth endpoints through discovery. No client
+secret, API key or access token belongs in the ZIP.
+
+The source `mcp.json` stays valid against the published Agent Plugins 1.0 schema. That schema
+rejects OpenAI's per-server `extensions` field, so the generated upload is OpenAI-specific, not a
+portable MCP config. It keeps the `$schema` marker shown in OpenAI's example. CI checks the upload's
+transport fields against the unchanged portable schema and its auth fields against our closed,
+docs-derived OAuth profile in `schemas/openai-oauth.schema.json`. This profile checks the settings
+we export; it is not an official OpenAI schema or a list of every auth method OpenAI supports.
+Local servers and fixed-key configs are not supported by this exporter.
+
+Run the local export check after changing the exporter:
+
+```sh
+python3 scripts/check-openai-export.py
+```
+
+It checks every plugin's ZIP, unchanged source files, repeatable output and rejected credentials
+or unsupported auth settings. It does not run in CI.
+
 ## Layout
 
 - `.claude-plugin/marketplace.json` lists the plugins. Claude Code and Codex both read it.
@@ -44,4 +79,5 @@ own page (featury's is https://featury.app/en/privacy/ai-apps). A plugin without
 `PRIVACY.md` in its folder, and its manifests link to that file.
 
 Every push checks the Claude files with `claude plugin validate --strict`, the Agent Plugins files
-against the spec's schemas, and each registry entry with `mcp-publisher validate`.
+against the spec's schemas, OpenAI upload packages as described above, and each registry entry with
+`mcp-publisher validate`.
