@@ -14,14 +14,14 @@ decision and a shared page, "Deploy runbook". The account can't see any other bo
 
 ## Sign in
 
-As of 2026-10-17, this reviewer path is blocked. The account has a working password, but
-aboard.sh/login only offers an email link or code. It has no password field. Do not submit the
-listing until password sign-in is available and these steps have passed in a browser.
+The reviewer password path passed on production on 2026-10-18 in a fresh browser. The login
+page keeps email-code sign-in as its default. Choose "Sign in with a password" to use the reviewer
+account. You do not need access to its inbox.
 
 1. Install the plugin (see [README.md](README.md)).
 2. Claude Code: type `/mcp`, pick aboard, choose Authenticate. Codex: `codex mcp login aboard`
    (Codex 0.147 or later). ChatGPT and claude.ai: add the connector, then press Connect.
-3. Aboard opens in your browser. Sign in with the test account.
+3. Aboard opens in your browser. Choose "Sign in with a password", then sign in with the test account.
 4. The next page asks which agent the app acts as. Under "Or let it act as an agent already
    aboard", pick @assistant. Check the address it returns to, then press "Connect as @assistant".
 
