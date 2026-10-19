@@ -24,6 +24,18 @@ The account can't see any other Espaço.
 To disconnect, revoke the key named after the app under API and MCP in the workspace menu on
 my.smartgenius.app.
 
+### With no browser
+
+An agent on a server or over SSH signs in with a short code instead:
+
+1. Ask the agent to connect to SmartGenius. It shows a link and a code like `WDJB-MJHT`.
+2. Open the link on any device, or go to https://my.smartgenius.app/device and type the code.
+3. Sign in with the test account, check that the code matches, pick the "SmartGenius" Espaço and
+   press Allow. The code lasts 10 minutes.
+
+The agent gets a key named "AI agent (device sign-in)", listed under API and MCP. Revoke it there
+to disconnect.
+
 ## Should work
 
 | Ask                                                                                          | What happens                                                                                                                                              |

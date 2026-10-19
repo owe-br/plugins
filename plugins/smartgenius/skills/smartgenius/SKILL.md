@@ -85,9 +85,30 @@ in the workspace menu.
 Only an admin of the Espaço can connect an app. Anyone else sees a page that says so: tell them to
 ask an admin of their Espaço to connect it, or to make them an admin.
 
-Where no browser can come back to you (a server, a container, an SSH session), ask the user for
-an API key instead. A workspace admin makes one under API and MCP in the workspace menu; send it
-as `Authorization: Bearer sg_…` to `/mcp`.
+## Signing in with no browser
+
+When you run where no browser can come back to you (a server, a container, an SSH session) and
+the user has no API key to paste, sign in with a short code:
+
+1. `POST https://api.smartgenius.app/oauth/device_authorization` with the form body
+   `client_id=smartgenius-agent`. Any other client id gets `unauthorized_client`. The answer
+   carries `device_code`, `user_code` (like `WDJB-MJHT`), `verification_uri_complete`,
+   `expires_in` (600 seconds) and `interval` (5 seconds).
+2. Show the user the link and the code. Ask them to open the link on any device, sign in, check
+   that the page shows the same code, pick the Espaço and press Allow. They can also go to
+   https://my.smartgenius.app/device and type the code. Only an admin of the Espaço can allow it.
+   Never open the link for them or send it to anyone else.
+3. Every `interval` seconds, `POST https://api.smartgenius.app/oauth/token` with the form body
+   `grant_type=urn:ietf:params:oauth:grant-type:device_code`, `device_code` and
+   `client_id=smartgenius-agent`. `authorization_pending` means keep waiting, and `slow_down`
+   means you polled too soon. `access_denied` or `expired_token` means stop and tell the user;
+   a new attempt starts from step 1.
+4. The answer's `access_token` is an ordinary `sg_` key named "AI agent (device sign-in)". It
+   has no expiry and counts toward the Espaço's limit of 10 keys. It is handed out once, so save
+   it where your MCP client reads it, and send it as `Authorization: Bearer sg_…` to `/mcp`. A
+   workspace admin can revoke it under API and MCP in the workspace menu.
+
+A workspace admin can also make a key by hand under API and MCP and give it to you.
 
 ## Without MCP
 

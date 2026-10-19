@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "smartgenius",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Make Instagram posts, carousels and stories for your profiles, and draw images in your brand's style or from any prompt.",
   "author": {
     "name": "Gustavo Salomé",

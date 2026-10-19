@@ -44,8 +44,10 @@ MCP in the workspace menu and can revoke it there at any time.
 Only an admin of the workspace can connect an app to it. Anyone else is asked to have an admin do
 it.
 
-No browser on the machine? Make an API key under API and MCP in the workspace menu and give it
-to your agent instead.
+No browser on the machine? The skill shows the agent how to sign in with a short code. Open the
+link it gives you on any device, check that the code matches, pick the workspace and press Allow.
+The agent gets a key named "AI agent (device sign-in)", listed under API and MCP. You can also
+make a key there yourself and give it to your agent.
 
 ## Images and limits
 
