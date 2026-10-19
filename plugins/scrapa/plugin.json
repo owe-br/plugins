@@ -1,0 +1,45 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "scrapa",
+  "version": "1.0.0",
+  "description": "Read web pages as markdown, search the web, list a site's URLs and run a real Chrome.",
+  "author": {
+    "name": "Gustavo Salomé",
+    "email": "gustavonips@gmail.com",
+    "url": "https://scrapa.app/en"
+  },
+  "homepage": "https://docs.scrapa.app/en/mcp",
+  "repository": "https://github.com/owe-br/plugins",
+  "license": "MIT",
+  "keywords": ["scraping", "web", "search", "browser", "scrapa"],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "scrapa.app",
+        "shortDescription": "Web pages, search and a real Chrome",
+        "longDescription": "scrapa reads a web page and hands it back as markdown, HTML, text, links, a screenshot or a PDF, with a plain HTTP request or a real Chrome, whichever the page needs. It also searches the web, lists every URL a site publishes, reads a long list of pages in the background, and holds a browser your own Playwright or Puppeteer code can drive. Every answer says what it cost. A page the site blocked costs nothing, unless a script you sent ran in it first.",
+        "developerName": "Gustavo Salomé",
+        "category": "Research",
+        "capabilities": [
+          "Read a web page as markdown, text or a screenshot",
+          "Search the web and read the results",
+          "List a site's URLs and read many pages at once",
+          "Hold a real Chrome for your own scripts"
+        ],
+        "websiteURL": "https://scrapa.app/en",
+        "supportURL": "https://docs.scrapa.app/en/mcp",
+        "privacyPolicyURL": "https://scrapa.app/en/privacy",
+        "termsOfServiceURL": "https://scrapa.app/en/terms",
+        "defaultPrompt": [
+          "Read https://example.com and summarize it.",
+          "Search the web for this week's news about electric buses in Brazil.",
+          "List the blog URLs on example.com."
+        ],
+        "brandColor": "#0B7183",
+        "brandColorDark": "#12A9B8",
+        "composerIcon": "./assets/logo.png",
+        "logo": "./assets/logo.png"
+      }
+    }
+  }
+}

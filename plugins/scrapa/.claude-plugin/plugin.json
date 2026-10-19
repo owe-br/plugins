@@ -1,0 +1,20 @@
+{
+  "name": "scrapa",
+  "version": "1.0.0",
+  "description": "Read web pages as markdown, search the web, list a site's URLs and run a real Chrome.",
+  "author": {
+    "name": "Gustavo Salomé",
+    "email": "gustavonips@gmail.com",
+    "url": "https://scrapa.app/en"
+  },
+  "homepage": "https://docs.scrapa.app/en/mcp",
+  "repository": "https://github.com/owe-br/plugins",
+  "license": "MIT",
+  "keywords": ["scraping", "web", "search", "browser", "scrapa"],
+  "displayName": "scrapa.app",
+  "icon": "./assets/logo.png",
+  "documentationUrl": "https://docs.scrapa.app/en/mcp",
+  "privacyPolicyUrl": "https://scrapa.app/en/privacy",
+  "termsOfServiceUrl": "https://scrapa.app/en/terms",
+  "supportUrl": "https://github.com/owe-br/plugins/issues"
+}

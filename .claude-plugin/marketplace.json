@@ -42,6 +42,12 @@
       "source": "./plugins/gmaps",
       "description": "Find businesses by what they are and where they are, collect a whole city, and export the list.",
       "category": "productivity"
+    },
+    {
+      "name": "scrapa",
+      "source": "./plugins/scrapa",
+      "description": "Read web pages as markdown, search the web, list a site's URLs and run a real Chrome.",
+      "category": "productivity"
     }
   ]
 }

@@ -11,6 +11,7 @@ teaches it that product's workflows with a skill.
 | [whatsapi](plugins/whatsapi)       | Send WhatsApp messages from your own numbers, read and answer your chats, and send sign-in codes.      |
 | [socially](plugins/socially)       | Read public social profiles and posts, search topics and usernames, and follow lookup jobs.            |
 | [gmaps](plugins/gmaps)             | Find businesses by what they are and where they are, collect a whole city, and export the list.        |
+| [scrapa](plugins/scrapa)           | Read web pages as markdown, search the web, list a site's URLs and run a real Chrome.                  |
 
 ## Install
 
