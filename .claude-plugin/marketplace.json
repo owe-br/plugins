@@ -36,6 +36,12 @@
       "source": "./plugins/socially",
       "description": "Read public social profiles and posts, search topics and usernames, and follow lookup jobs.",
       "category": "productivity"
+    },
+    {
+      "name": "gmaps",
+      "source": "./plugins/gmaps",
+      "description": "Find businesses by what they are and where they are, collect a whole city, and export the list.",
+      "category": "productivity"
     }
   ]
 }

@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "gmaps": {
+      "type": "http",
+      "url": "https://api.gmaps.dev/mcp"
+    }
+  }
+}

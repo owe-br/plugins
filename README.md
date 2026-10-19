@@ -10,6 +10,7 @@ teaches it that product's workflows with a skill.
 | [smartgenius](plugins/smartgenius) | Make Instagram posts, carousels and stories for your profiles, and draw images in your brand's style.  |
 | [whatsapi](plugins/whatsapi)       | Send WhatsApp messages from your own numbers, read and answer your chats, and send sign-in codes.      |
 | [socially](plugins/socially)       | Read public social profiles and posts, search topics and usernames, and follow lookup jobs.            |
+| [gmaps](plugins/gmaps)             | Find businesses by what they are and where they are, collect a whole city, and export the list.        |
 
 ## Install
 

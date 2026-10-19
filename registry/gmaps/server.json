@@ -1,0 +1,26 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "dev.gmaps/gmaps",
+  "title": "gmaps.dev",
+  "description": "Find businesses by what they are and where they are, collect a whole city, and export the list.",
+  "version": "1.0.0",
+  "websiteUrl": "https://gmaps.dev/docs/en/mcp",
+  "icons": [
+    {
+      "src": "https://gmaps.dev/web-app-manifest-512x512.png",
+      "mimeType": "image/png",
+      "sizes": ["512x512"]
+    },
+    {
+      "src": "https://gmaps.dev/icon.svg",
+      "mimeType": "image/svg+xml",
+      "sizes": ["any"]
+    }
+  ],
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://api.gmaps.dev/mcp"
+    }
+  ]
+}

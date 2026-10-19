@@ -1,0 +1,45 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "gmaps",
+  "version": "1.0.0",
+  "description": "Find businesses by what they are and where they are, collect a whole city, and export the list.",
+  "author": {
+    "name": "Gustavo Salomé",
+    "email": "gustavonips@gmail.com",
+    "url": "https://gmaps.dev/en"
+  },
+  "homepage": "https://gmaps.dev/docs/en/mcp",
+  "repository": "https://github.com/owe-br/plugins",
+  "license": "MIT",
+  "keywords": ["leads", "businesses", "places", "lead-generation", "gmaps"],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "gmaps.dev",
+        "shortDescription": "Business leads by type and area",
+        "longDescription": "gmaps.dev finds businesses on the map, such as bakeries in Curitiba or dentists near a point, with their phones, websites, addresses, ratings and opening hours. Places saved from earlier searches come back at once and cost nothing. Each new place costs one credit, and a free quote says the most a whole-city collection can cost before it starts. Your agent hands you the list as a csv, json or xlsx file. gmaps.dev is not affiliated with Google.",
+        "developerName": "Gustavo Salomé",
+        "category": "Research",
+        "capabilities": [
+          "Search businesses by type and area",
+          "Quote and collect a whole city",
+          "Export places as csv, json or xlsx",
+          "Check the credits used and left"
+        ],
+        "websiteURL": "https://gmaps.dev/en",
+        "supportURL": "https://gmaps.dev/docs/en/mcp",
+        "privacyPolicyURL": "https://gmaps.dev/en/privacy#ai-apps",
+        "termsOfServiceURL": "https://gmaps.dev/en/terms",
+        "defaultPrompt": [
+          "Find 20 bakeries in Curitiba with their phones and websites.",
+          "How many credits would it take to collect every dentist in Porto Alegre?",
+          "Export my last collection as a spreadsheet."
+        ],
+        "brandColor": "#1b1e22",
+        "brandColorDark": "#f3f5f4",
+        "composerIcon": "./assets/logo.png",
+        "logo": "./assets/logo.png"
+      }
+    }
+  }
+}

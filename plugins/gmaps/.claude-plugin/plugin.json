@@ -1,0 +1,20 @@
+{
+  "name": "gmaps",
+  "version": "1.0.0",
+  "description": "Find businesses by what they are and where they are, collect a whole city, and export the list.",
+  "author": {
+    "name": "Gustavo Salomé",
+    "email": "gustavonips@gmail.com",
+    "url": "https://gmaps.dev/en"
+  },
+  "homepage": "https://gmaps.dev/docs/en/mcp",
+  "repository": "https://github.com/owe-br/plugins",
+  "license": "MIT",
+  "keywords": ["leads", "businesses", "places", "lead-generation", "gmaps"],
+  "displayName": "gmaps.dev",
+  "icon": "./assets/logo.png",
+  "documentationUrl": "https://gmaps.dev/docs/en/mcp",
+  "privacyPolicyUrl": "https://gmaps.dev/en/privacy#ai-apps",
+  "termsOfServiceUrl": "https://gmaps.dev/en/terms",
+  "supportUrl": "https://github.com/owe-br/plugins/issues"
+}
