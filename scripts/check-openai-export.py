@@ -22,7 +22,7 @@ def refuses(function, value):
         function(value)
     except ValueError:
         return
-    raise AssertionError("An invalid MCP config was accepted.")
+    raise AssertionError("An invalid config or listing was accepted.")
 
 
 with tempfile.TemporaryDirectory() as temporary:
@@ -67,4 +67,23 @@ with tempfile.TemporaryDirectory() as temporary:
             invalid["mcpServers"][server_name]["extensions"]["com.openai"]["auth"] = auth
             refuses(exporter["validation_documents"], invalid)
 
-print(f"Passed: {len(plugins)} exports, unchanged source files, stable ZIPs and invalid configs refused.")
+        manifest = json.loads(source["plugin.json"])
+        listing = manifest["extensions"]["com.openai"]["interface"]
+        for override in (
+            {"shortDescription": "x" * 31},
+            {"displayName": "x" * 31},
+            {"shortDescription": "Two\nlines"},
+            {"category": "Research"},
+            {"capabilities": ["x" * 121]},
+            {"defaultPrompt": ["a", "b", "c", "d"]},
+            {"longDescription": listing["longDescription"] + " The first month is free."},
+            {"longDescription": listing["longDescription"] + " Each search costs one credit."},
+        ):
+            invalid = copy.deepcopy(manifest)
+            invalid["extensions"]["com.openai"]["interface"].update(override)
+            refuses(exporter["check_listing"], invalid)
+
+print(
+    f"Passed: {len(plugins)} exports, unchanged source files, stable ZIPs, and invalid configs and"
+    " listings refused."
+)

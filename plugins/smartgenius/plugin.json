@@ -16,10 +16,10 @@
     "com.openai": {
       "interface": {
         "displayName": "SmartGenius",
-        "shortDescription": "Instagram posts and brand images",
+        "shortDescription": "Instagram posts and AI images",
         "longDescription": "SmartGenius is a social media manager for Instagram. Ask it for a post, a carousel or a story for one of your profiles, and it plans the slides, writes the text and caption, and draws each image in that profile's voice and visual style. It can also draw images from any prompt. Every post lands as a draft: you approve, schedule or publish it yourself in the SmartGenius studio.",
         "developerName": "Gustavo Salomé",
-        "category": "Design",
+        "category": "Creativity",
         "capabilities": [
           "Draft Instagram posts, carousels and stories",
           "Draw images in a profile's visual style",

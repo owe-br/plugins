@@ -16,10 +16,10 @@
     "com.openai": {
       "interface": {
         "displayName": "scrapa.app",
-        "shortDescription": "Web pages, search and a real Chrome",
+        "shortDescription": "Web pages, search and Chrome",
         "longDescription": "scrapa reads a web page and hands it back as markdown, HTML, text, links, a screenshot or a PDF, with a plain HTTP request or a real Chrome, whichever the page needs. It also searches the web, lists every URL a site publishes, reads a long list of pages in the background, and holds a browser your own Playwright or Puppeteer code can drive. Every answer says what it cost. A page the site blocked costs nothing, unless a script you sent ran in it first.",
         "developerName": "Gustavo Salomé",
-        "category": "Research",
+        "category": "Developer Tools",
         "capabilities": [
           "Read a web page as markdown, text or a screenshot",
           "Search the web and read the results",

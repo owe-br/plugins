@@ -16,15 +16,15 @@
     "com.openai": {
       "interface": {
         "displayName": "pncp.dev",
-        "shortDescription": "Brazil's public procurement data",
-        "longDescription": "pncp.dev lets your agent read the public API of PNCP, Brazil's national public procurement portal, with the same /api/ routes and filters. Find tenders published in a period, tenders still open for proposals, signed contracts, price records and the details of one purchase. Each query uses one request of your monthly quota, even when the answer comes from the cache. Checking your usage is free. The data comes as PNCP publishes it, in Portuguese. pncp.dev is not affiliated with PNCP or the Brazilian government.",
+        "shortDescription": "Brazil's procurement data",
+        "longDescription": "pncp.dev lets your agent read the public API of PNCP, Brazil's national public procurement portal, with the same /api/ routes and filters. Find tenders published in a period, tenders still open for proposals, signed contracts, price records and the details of one purchase. The data comes as PNCP publishes it, in Portuguese. pncp.dev is not affiliated with PNCP or the Brazilian government.",
         "developerName": "Gustavo Salomé",
-        "category": "Research",
+        "category": "Data & Analytics",
         "capabilities": [
           "Find tenders published in a period",
           "List tenders still open for proposals",
           "Read contracts, price records and one purchase",
-          "Check this month's quota and credits"
+          "Check how many requests you used this month"
         ],
         "websiteURL": "https://pncp.dev",
         "supportURL": "https://pncp.dev/docs#mcp",

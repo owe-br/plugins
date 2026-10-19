@@ -16,10 +16,10 @@
     "com.openai": {
       "interface": {
         "displayName": "socially.run",
-        "shortDescription": "Public social profiles, posts and searches",
+        "shortDescription": "Public social media data",
         "longDescription": "Read public social profiles and posts, see what people are publishing about a topic, and follow username or email lookup jobs. socially reports what it found and what it could not check separately. Missing data stays missing: a blocked page is not proof that a profile does not exist. It does not sign into social accounts or read private messages.",
         "developerName": "Gustavo Salomé",
-        "category": "Research",
+        "category": "Data & Analytics",
         "capabilities": [
           "Read public profiles and posts",
           "Search videos, news and country trends",

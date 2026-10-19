@@ -14,6 +14,20 @@ from urllib.parse import urlsplit
 ROOT = Path(__file__).resolve().parents[1]
 MCP_SCHEMA = "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json"
 OAUTH_EXTENSIONS = json.loads((ROOT / "schemas/openai-oauth.schema.json").read_text())["const"]
+# OpenAI's limits for submitting a listing, from developers.openai.com/plugins/deploy/submission-errors.
+# Uploading checks looser ones (a 240-character subtitle passes), so a plugin that uploads can still be
+# refused at submission. These are checked here so CI refuses it first.
+CATEGORIES = {
+    "Productivity", "Creativity", "Developer Tools", "Business & Operations", "Data & Analytics",
+    "Communication", "Education & Research", "Security", "Finance", "Healthcare", "Travel",
+    "Entertainment", "Other",
+}
+ONE_LINE_LIMITS = {"displayName": 30, "shortDescription": 30, "developerName": 80}
+# ponytail: a word list, not a reader. The listing may not advertise prices, plans, trials or credits,
+# and these words are the ones that already drew that finding. OpenAI's review stays the judge.
+PRICING_WORDS = re.compile(
+    r"\b(free|trials?|discounts?|pricing|subscriptions?|credits?|quotas?|upgrades?|promotions?)\b", re.I
+)
 
 
 def openai_mcp(portable):
@@ -60,6 +74,39 @@ def validation_documents(packaged):
     return portable, extensions
 
 
+def check_listing(manifest):
+    listing = manifest.get("extensions", {}).get("com.openai", {}).get("interface")
+    if not isinstance(listing, dict):
+        raise ValueError("plugin.json needs extensions.com.openai.interface for the OpenAI listing.")
+    for field, limit in {**ONE_LINE_LIMITS, "longDescription": 4000}.items():
+        value = listing.get(field)
+        if not isinstance(value, str) or not value.strip():
+            raise ValueError(f"interface.{field} is required.")
+        if len(value) > limit:
+            raise ValueError(f"interface.{field} is {len(value)} characters. OpenAI's limit is {limit}.")
+        if field in ONE_LINE_LIMITS and "\n" in value:
+            raise ValueError(f"interface.{field} must fit on one line.")
+    if listing.get("category") not in CATEGORIES:
+        raise ValueError(
+            f"interface.category {listing.get('category')!r} is not one of OpenAI's: "
+            + ", ".join(sorted(CATEGORIES))
+            + "."
+        )
+    capabilities = listing.get("capabilities", [])
+    if len(capabilities) > 20 or any(len(capability) > 120 for capability in capabilities):
+        raise ValueError("interface.capabilities takes at most 20 entries of 120 characters each.")
+    prompts = listing.get("defaultPrompt", [])
+    prompts = [prompts] if isinstance(prompts, str) else prompts
+    if len(prompts) > 3 or any(len(prompt) > 128 for prompt in prompts):
+        raise ValueError("interface.defaultPrompt takes at most 3 prompts of 128 characters each.")
+    text = " ".join([listing["shortDescription"], listing["longDescription"], *capabilities])
+    found = sorted({word.lower() for word in PRICING_WORDS.findall(text)})
+    if found:
+        raise ValueError(
+            f"The listing says {', '.join(found)}. OpenAI refuses prices, plans, trials and credits there."
+        )
+
+
 def plugin_files(plugin):
     if not re.fullmatch(r"[a-z0-9]+(?:[.-][a-z0-9]+)*", plugin):
         raise ValueError("Use a plugin name, such as featury.")
@@ -88,6 +135,10 @@ def plugin_files(plugin):
 
 def export_plugin(plugin, output, validation_dir=None):
     files = plugin_files(plugin)
+    try:
+        check_listing(json.loads(files["plugin.json"]))
+    except ValueError as error:
+        raise ValueError(f"{plugin}: {error}") from None
     files["mcp.json"] = (
         json.dumps(openai_mcp(json.loads(files["mcp.json"])), indent=2) + "\n"
     ).encode()
