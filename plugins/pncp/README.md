@@ -52,5 +52,6 @@ on another device, check the 8-letter code and approve it. The code expires in 1
 
 - [MCP setup, in Portuguese](https://pncp.dev/docs#mcp)
 - [Privacy for AI apps](https://pncp.dev/privacidade#apps-de-ia)
+- What to try, and what should be refused: [TESTING.md](TESTING.md)
 - [Terms](https://pncp.dev/termos)
 - Help: [suporte@pncp.dev](mailto:suporte@pncp.dev)
