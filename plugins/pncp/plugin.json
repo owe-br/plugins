@@ -1,0 +1,45 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "pncp",
+  "version": "1.0.0",
+  "description": "Query Brazil's public procurement portal (PNCP): tenders, contracts and price records.",
+  "author": {
+    "name": "Gustavo Salomé",
+    "email": "gustavonips@gmail.com",
+    "url": "https://pncp.dev"
+  },
+  "homepage": "https://pncp.dev/docs#mcp",
+  "repository": "https://github.com/owe-br/plugins",
+  "license": "MIT",
+  "keywords": ["pncp", "procurement", "tenders", "contracts", "brazil"],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "pncp.dev",
+        "shortDescription": "Brazil's public procurement data",
+        "longDescription": "pncp.dev lets your agent read the public API of PNCP, Brazil's national public procurement portal, with the same /api/ routes and filters. Find tenders published in a period, tenders still open for proposals, signed contracts, price records and the details of one purchase. Each query uses one request of your monthly quota, even when the answer comes from the cache. Checking your usage is free. The data comes as PNCP publishes it, in Portuguese. pncp.dev is not affiliated with PNCP or the Brazilian government.",
+        "developerName": "Gustavo Salomé",
+        "category": "Research",
+        "capabilities": [
+          "Find tenders published in a period",
+          "List tenders still open for proposals",
+          "Read contracts, price records and one purchase",
+          "Check this month's quota and credits"
+        ],
+        "websiteURL": "https://pncp.dev",
+        "supportURL": "https://pncp.dev/docs#mcp",
+        "privacyPolicyURL": "https://pncp.dev/privacidade#apps-de-ia",
+        "termsOfServiceURL": "https://pncp.dev/termos",
+        "defaultPrompt": [
+          "List the pregão eletrônico tenders published on PNCP on October 1, 2026.",
+          "Which tenders in Paraná are still open for proposals?",
+          "How much of my pncp.dev quota is left this month?"
+        ],
+        "brandColor": "#193a2e",
+        "brandColorDark": "#f6f6f1",
+        "composerIcon": "./assets/logo.png",
+        "logo": "./assets/logo.png"
+      }
+    }
+  }
+}

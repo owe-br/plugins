@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" role="img" aria-label="pncp.dev">
+  <rect width="48" height="48" rx="10" fill="#193a2e"/>
+  <g>
+  <rect x="13.00" y="9.00" width="22.00" height="30.00" rx="1.50" fill="#fefefb"/>
+  <path d="M18.50 10.50v27.00" stroke="#da534f" stroke-width="1.80"/>
+  <path d="M21.50 16.00h10.00M21.50 21.00h10.00M21.50 26.00h10.00M21.50 31.00h6.50" stroke="#1d2a38" stroke-width="1.60" stroke-linecap="round" opacity="0.6"/>
+</g>
+</svg>

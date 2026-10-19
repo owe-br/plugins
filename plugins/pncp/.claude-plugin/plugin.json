@@ -1,0 +1,20 @@
+{
+  "name": "pncp",
+  "version": "1.0.0",
+  "description": "Query Brazil's public procurement portal (PNCP): tenders, contracts and price records.",
+  "author": {
+    "name": "Gustavo Salomé",
+    "email": "gustavonips@gmail.com",
+    "url": "https://pncp.dev"
+  },
+  "homepage": "https://pncp.dev/docs#mcp",
+  "repository": "https://github.com/owe-br/plugins",
+  "license": "MIT",
+  "keywords": ["pncp", "procurement", "tenders", "contracts", "brazil"],
+  "displayName": "pncp.dev",
+  "icon": "./assets/logo.png",
+  "documentationUrl": "https://pncp.dev/docs#mcp",
+  "privacyPolicyUrl": "https://pncp.dev/privacidade#apps-de-ia",
+  "termsOfServiceUrl": "https://pncp.dev/termos",
+  "supportUrl": "https://github.com/owe-br/plugins/issues"
+}

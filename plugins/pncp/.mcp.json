@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "pncp": {
+      "type": "http",
+      "url": "https://api.pncp.dev/mcp"
+    }
+  }
+}

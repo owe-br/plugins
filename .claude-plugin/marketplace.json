@@ -48,6 +48,12 @@
       "source": "./plugins/scrapa",
       "description": "Read web pages as markdown, search the web, list a site's URLs and run a real Chrome.",
       "category": "productivity"
+    },
+    {
+      "name": "pncp",
+      "source": "./plugins/pncp",
+      "description": "Query Brazil's public procurement portal (PNCP): tenders, contracts and price records.",
+      "category": "productivity"
     }
   ]
 }
