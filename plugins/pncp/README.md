@@ -9,14 +9,15 @@ Brazilian government or Cloudflare.
 
 ## What's inside
 
-- A skill for building the PNCP route, reading the answer, keeping the number of pages small and
+- A skill for picking the tool and its filters, reading the answer, keeping the number of pages small and
   stopping on a refusal.
 - The remote MCP server at `https://api.pncp.dev/mcp`. Nothing runs on your machine.
 - Manifests for Claude Code and Agent Plugins (ChatGPT, Codex and Cursor).
 
-The server has 2 tools, both read-only. `get_pncp` reads one page of a PNCP `/api/` route and uses
-one request of your monthly quota, even when the answer comes from the cache. A refused call counts
-too. `get_usage` shows this month's usage, quota and credits, and is free.
+The server has 6 tools, all read-only. Five read PNCP: tenders published in a period, tenders still
+open for proposals, contracts, price records and one purchase in detail. Each call uses one request
+of your monthly quota, even when the answer comes from the cache. A call PNCP refuses counts too.
+`get_usage` shows this month's usage, quota and credits, and is free.
 
 ## Install
 
