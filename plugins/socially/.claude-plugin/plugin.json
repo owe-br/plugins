@@ -1,7 +1,7 @@
 {
   "name": "socially",
-  "version": "1.0.0",
-  "description": "Read public social profiles and posts, search topics and usernames, and follow lookup jobs.",
+  "version": "1.1.0",
+  "description": "Read public social profiles and posts, and search videos, news and trends.",
   "author": {
     "name": "Gustavo Salomé",
     "email": "gustavonips@gmail.com",
@@ -10,7 +10,7 @@
   "homepage": "https://socially.run/docs/en/mcp",
   "repository": "https://github.com/owe-br/plugins",
   "license": "MIT",
-  "keywords": ["social-media", "profiles", "search", "research", "socially"],
+  "keywords": ["social-media", "profiles", "news", "trends", "socially"],
   "displayName": "socially.run",
   "icon": "./assets/logo.png",
   "documentationUrl": "https://socially.run/docs/en/mcp",
