@@ -34,7 +34,7 @@
     {
       "name": "socially",
       "source": "./plugins/socially",
-      "description": "Read public social profiles and posts, search topics and usernames, and follow lookup jobs.",
+      "description": "Read public social profiles and posts, and search videos, news and trends.",
       "category": "productivity"
     },
     {

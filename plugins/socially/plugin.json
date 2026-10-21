@@ -1,8 +1,8 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "socially",
-  "version": "1.0.0",
-  "description": "Read public social profiles and posts, search topics and usernames, and follow lookup jobs.",
+  "version": "1.1.0",
+  "description": "Read public social profiles and posts, and search videos, news and trends.",
   "author": {
     "name": "Gustavo Salomé",
     "email": "gustavonips@gmail.com",
@@ -11,19 +11,18 @@
   "homepage": "https://socially.run/docs/en/mcp",
   "repository": "https://github.com/owe-br/plugins",
   "license": "MIT",
-  "keywords": ["social-media", "profiles", "search", "research", "socially"],
+  "keywords": ["social-media", "profiles", "news", "trends", "socially"],
   "extensions": {
     "com.openai": {
       "interface": {
         "displayName": "socially.run",
         "shortDescription": "Public social media data",
-        "longDescription": "Read public social profiles and posts, see what people are publishing about a topic, and follow username or email lookup jobs. socially reports what it found and what it could not check separately. Missing data stays missing: a blocked page is not proof that a profile does not exist. It does not sign into social accounts or read private messages.",
+        "longDescription": "Read a public profile or post on Instagram, TikTok, YouTube, LinkedIn, X or Facebook, read a web page, and see what is being published or trending: YouTube videos, news stories and a country's trend board. socially reports what it found and what it could not check as separate answers, so a blocked page is never read as a missing profile. It reads one profile, post or page at a time. It does not sign into social accounts, read private messages, find a person's accounts on other sites or look anyone up by email or username.",
         "developerName": "Gustavo Salomé",
         "category": "Data & Analytics",
         "capabilities": [
           "Read public profiles and posts",
           "Search videos, news and country trends",
-          "Search usernames and follow lookup jobs",
           "Read web pages and their link previews"
         ],
         "websiteURL": "https://socially.run",
@@ -33,7 +32,7 @@
         "defaultPrompt": [
           "Read the public profile at this link.",
           "What videos and news were published about urban gardening this week?",
-          "What is the status of my lookup job?"
+          "What is trending in Brazil today?"
         ],
         "brandColor": "#f4bf2a",
         "brandColorDark": "#f4bf2a",
