@@ -1,0 +1,20 @@
+{
+  "name": "colding",
+  "displayName": "colding",
+  "version": "1.0.0",
+  "description": "Read and answer email, manage contacts and campaigns, check addresses and send app mail.",
+  "author": {
+    "name": "Gustavo Salomé",
+    "email": "gustavonips@gmail.com",
+    "url": "https://colding.app/en"
+  },
+  "homepage": "https://colding.app/en/docs",
+  "repository": "https://github.com/owe-br/plugins",
+  "license": "MIT",
+  "keywords": ["email", "inbox", "campaigns", "outreach", "transactional", "colding"],
+  "icon": "./assets/logo.png",
+  "documentationUrl": "https://colding.app/en/docs",
+  "privacyPolicyUrl": "https://colding.app/en/privacy",
+  "termsOfServiceUrl": "https://colding.app/en/terms",
+  "supportUrl": "https://github.com/owe-br/plugins/issues"
+}

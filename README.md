@@ -14,6 +14,7 @@ teaches it that product's workflows with a skill.
 | [scrapa](plugins/scrapa)           | Read web pages as markdown, search the web, list a site's URLs and run a real Chrome.                  |
 | [pncp](plugins/pncp)               | Query Brazil's public procurement portal (PNCP): tenders, contracts and price records.                 |
 | [voar](plugins/voar)               | Read your organization's GitHub Actions jobs and usage on voar. Read-only.                             |
+| [colding](plugins/colding)         | Read and answer email, manage contacts and campaigns, check addresses and send app mail.               |
 
 ## Install
 

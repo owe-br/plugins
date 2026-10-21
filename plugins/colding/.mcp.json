@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "colding": {
+      "type": "http",
+      "url": "https://api.colding.app/mcp"
+    }
+  }
+}

@@ -60,6 +60,12 @@
       "source": "./plugins/voar",
       "description": "Read your organization's GitHub Actions jobs and usage on voar. Read-only.",
       "category": "development"
+    },
+    {
+      "name": "colding",
+      "source": "./plugins/colding",
+      "description": "Read and answer email, manage contacts and campaigns, check addresses and send app mail.",
+      "category": "communication"
     }
   ]
 }

@@ -1,0 +1,45 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "colding",
+  "version": "1.0.0",
+  "description": "Read and answer email, manage contacts and campaigns, check addresses and send app mail.",
+  "author": {
+    "name": "Gustavo Salomé",
+    "email": "gustavonips@gmail.com",
+    "url": "https://colding.app/en"
+  },
+  "homepage": "https://colding.app/en/docs",
+  "repository": "https://github.com/owe-br/plugins",
+  "license": "MIT",
+  "keywords": ["email", "inbox", "campaigns", "outreach", "transactional", "colding"],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "colding",
+        "shortDescription": "Email through your mailboxes",
+        "longDescription": "colding connects the mailboxes in your workspace so your agent can read and organize threads, write and send replies, check email addresses, run outreach campaigns, send your app's own emails, and follow delivery events. Each connection belongs to one workspace and carries only the permissions the workspace owner selects, starting with reading alone. The owner can also limit a connection to chosen mailboxes, campaigns and daily or total send limits, and can revoke it at any time in the console.",
+        "developerName": "Gustavo Salomé",
+        "category": "Communication",
+        "capabilities": [
+          "Read threads, messages and attachments from connected mailboxes",
+          "Write drafts, reply to messages and organize the inbox",
+          "Manage contacts, segments, campaigns and address checks",
+          "Send transactional emails and follow delivery events"
+        ],
+        "websiteURL": "https://colding.app/en",
+        "supportURL": "https://colding.app/en/docs",
+        "privacyPolicyURL": "https://colding.app/en/privacy",
+        "termsOfServiceURL": "https://colding.app/en/terms",
+        "defaultPrompt": [
+          "List the latest threads in my inbox and summarize the unread ones.",
+          "Which mailboxes are connected in my workspace and what is their status?",
+          "Show the recent events and alerts in my workspace."
+        ],
+        "brandColor": "#5b4b8a",
+        "brandColorDark": "#715bac",
+        "composerIcon": "./assets/logo.png",
+        "logo": "./assets/logo.png"
+      }
+    }
+  }
+}
