@@ -93,13 +93,13 @@ For a new conversation or a careful review before sending:
 2. `preview_draft` with `draftId` checks whether the recipient address has a fresh passing check
    and shows what will be sent (needs `read`).
 3. To ask a human teammate to review and send the draft in the console, call `request_draft_review`
-   with `draftId` and `revision` (needs `operate`).
+   with `draftId` and an optional `note` (needs `operate`).
 4. To send the draft yourself once the user approves, call `send_draft` with `draftId` and its exact
    `revision` (needs `send`).
 
 To answer a received message directly without creating a separate draft first, call
-`reply_to_message` with `messageId` and your body (needs `operate` and `send`). Replies to received
-mail do not require an address check first.
+`reply_to_message` with `messageId`, `bodyText` (or `bodyHtml`) and an `intentKey` (needs `send`).
+Replies to received mail do not require an address check first.
 
 A new message or test (`send_test_message`, `send_campaign_step_test`) to an address outside the
 workspace requires a fresh address check showing the address can receive mail. If the check returned
@@ -107,8 +107,8 @@ workspace requires a fresh address check showing the address can receive mail. I
 `recipientReviewed: true` only after the user confirms they accept that risk.
 
 For your app's own emails (receipts, password resets, notices), call `send_transactional_message`
-with `intentKey`, `from` (or `mailboxId` / `senderAddressId`), `to`, `subject` and body (needs
-`transactional`).
+with `mailboxId` (a transactional mailbox from `list_mailboxes`), `to`, `subject`, `bodyText` (or
+`bodyHtml`) and `intentKey` (needs `transactional`).
 
 Follow any queued or sent email with `list_sends` and `get_send` (`sendId`). Cancel a send that has
 not left yet with `cancel_send` (`sendId`).
@@ -119,8 +119,10 @@ Address checks spend the workspace's monthly check allowance and require `valida
 
 1. Call `get_email_check_setup` first (needs `read`) to see whether checks are available, how many
    remain this month, and when the allowance resets.
-2. For one address, call `check_email_address` with `email`.
-3. For a batch, call `start_email_checks` with `emails` and an `intentKey` you generate (a UUID).
+2. For one address, call `check_email_address` with `address`.
+3. For a batch, call `start_email_checks` with a `selection` of contacts (`{"ids": [...]}`, or
+   `{"all": true, "filters": {...}}`), or with `campaignId` and `leads` for a campaign's leads, and
+   an `intentKey` you generate (a UUID).
    Follow the batch with `get_email_check_run` (`runId`) or `list_email_check_runs`. Cancel an
    unfinished batch with `cancel_email_check_run`, or retry unanswered items with
    `retry_email_check_run`.
@@ -132,10 +134,11 @@ when the user does not want to spend checks.
 
 ## Contacts, segments, suppressions and campaigns
 
-- **Contacts:** `list_contacts`, `count_contacts`, `get_contact`, `list_contact_timeline` and
-  `list_contact_custom_fields` need `read`. `create_contact`, `update_contact`, `delete_contact`,
-  `upsert_contacts`, `delete_contacts`, `label_contacts`, `export_contacts`, and the CSV import
-  tools (`create_contact_import`, `update_contact_import`, `commit_contact_import`) need `operate`.
+- **Contacts:** `list_contacts`, `count_contacts`, `get_contact`, `list_contact_timeline`,
+  `list_contact_custom_fields` and `export_contacts` need `read`. `create_contact`,
+  `update_contact`, `delete_contact`, `upsert_contacts`, `delete_contacts`, `label_contacts`, and
+  the CSV import tools (`create_contact_import`, `update_contact_import`, `commit_contact_import`)
+  need `operate`.
 - **Labels and segments:** `list_labels` and `list_segments`, `get_segment`,
   `count_segment_matches` need `read`. Creating, updating or deleting labels and segments needs
   `operate`.
@@ -192,7 +195,7 @@ Give the user the returned `url`, then poll `get_handoff` (`read`) until `status
 
 ## Idempotency and send intents
 
-Every write tool accepts an optional `idempotencyKey` (up to 128 characters, such as a UUID). If a
+Every write tool accepts an optional `idempotencyKey` (up to 255 characters, such as a UUID). If a
 call fails without an answer, retry with the same `idempotencyKey` and identical arguments: within
 24 hours, a saved answer is replayed instead of running a second time. Changing arguments on the
 same `idempotencyKey` returns 422 `IDEMPOTENCY_KEY_REUSED`.
@@ -201,8 +204,8 @@ Because an unanswered claim can run again after 15 minutes, HTTP request replay 
 prevent duplicate emails. Keep the send intent across retries too:
 
 - `send_transactional_message`: `intentKey` is required and permanently binds that one email.
-- `send_test_message` and `send_campaign_step_test`: pass your own `intentKey` so a retry cannot
-  send a second test email.
+- `reply_to_message`, `send_test_message` and `send_campaign_step_test`: pass your own `intentKey`
+  so a retry cannot send a second email.
 - `send_draft`: the `draftId` and exact `revision` name the send intent.
 - `start_email_checks`: pass an `intentKey` so a retry returns the same batch run.
 
@@ -212,19 +215,11 @@ Every tool returns `{"data": ...}` on success. When a call is refused, MCP retur
 with the same JSON body as the REST `/v1` API:
 
 ```json
-{
-  "error": {
-    "code": "FORBIDDEN",
-    "message": "...",
-    "messageKey": "...",
-    "params": {},
-    "details": {},
-    "requestId": "..."
-  }
-}
+{ "error": { "code": "NOT_FOUND", "message": "..." } }
 ```
 
-Act on `error.code` and `error.details`:
+`messageKey`, `params` and `details` are added when they apply. Act on `error.code` and
+`error.details`:
 
 | Code                            | Meaning and next step                                                                                                                                                                                                                     |
 | ------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -237,7 +232,7 @@ Act on `error.code` and `error.details`:
 | `IDEMPOTENCY_KEY_REUSED`        | The same `idempotencyKey` or `intentKey` was used with different arguments. Generate a fresh key only for a genuinely new write.                                                                                                          |
 | `QUOTA_EXCEEDED`                | A daily or monthly limit is spent (`details.scope`, such as `keyDay` or `testDay`). Stop and wait until `details.resetAt`.                                                                                                                |
 | `RATE_LIMIT_EXCEEDED`           | Too many tool calls in the window. Wait `details.retryAfterSecs`, then retry once.                                                                                                                                                        |
-| `PLAN_GATE`, `PAYMENT_REQUIRED` | The workspace's current setup does not allow this call. Tell the user or open a `manage_billing` handoff; never retry in a loop.                                                                                                          |
+| `PLAN_GATE`, `PAYMENT_REQUIRED` | The workspace's setup does not allow this call. Tell the user what was refused. Retrying does not help.                                                                                                                                   |
 
 ## Signing in
 
