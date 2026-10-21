@@ -49,5 +49,6 @@ link on another device, check the 8-letter code and approve it. The code expires
 ## Links
 
 - [API and MCP guide](https://voar.dev/en/docs#api)
-- [Privacy for connected AI apps](https://voar.dev/en/docs#ai-apps)
+- [Privacy](https://voar.dev/en/privacy#ai-apps)
+- [Terms](https://voar.dev/en/terms)
 - Help: [contato@voar.dev](mailto:contato@voar.dev)

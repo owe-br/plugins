@@ -28,7 +28,8 @@
         ],
         "websiteURL": "https://voar.dev/en",
         "supportURL": "https://voar.dev/en/docs#api",
-        "privacyPolicyURL": "https://voar.dev/en/docs#ai-apps",
+        "privacyPolicyURL": "https://voar.dev/en/privacy#ai-apps",
+        "termsOfServiceURL": "https://voar.dev/en/terms",
         "defaultPrompt": [
           "Which of my GitHub Actions jobs on voar are waiting right now, and why?",
           "Show my voar usage for this month, day by day.",

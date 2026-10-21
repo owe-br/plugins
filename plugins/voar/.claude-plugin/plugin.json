@@ -14,6 +14,7 @@
   "displayName": "voar",
   "icon": "./assets/logo.png",
   "documentationUrl": "https://voar.dev/en/docs#api",
-  "privacyPolicyUrl": "https://voar.dev/en/docs#ai-apps",
+  "privacyPolicyUrl": "https://voar.dev/en/privacy#ai-apps",
+  "termsOfServiceUrl": "https://voar.dev/en/terms",
   "supportUrl": "https://github.com/owe-br/plugins/issues"
 }
