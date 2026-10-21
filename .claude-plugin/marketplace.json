@@ -54,6 +54,12 @@
       "source": "./plugins/pncp",
       "description": "Query Brazil's public procurement portal (PNCP): tenders, contracts and price records.",
       "category": "productivity"
+    },
+    {
+      "name": "voar",
+      "source": "./plugins/voar",
+      "description": "Read your organization's GitHub Actions jobs and usage on voar. Read-only.",
+      "category": "development"
     }
   ]
 }

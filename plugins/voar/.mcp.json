@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "voar": {
+      "type": "http",
+      "url": "https://api.voar.dev/mcp"
+    }
+  }
+}

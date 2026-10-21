@@ -1,0 +1,44 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "voar",
+  "version": "1.0.0",
+  "description": "Read your organization's GitHub Actions jobs and usage on voar. Read-only.",
+  "author": {
+    "name": "Gustavo Salomé",
+    "email": "gustavonips@gmail.com",
+    "url": "https://voar.dev/en"
+  },
+  "homepage": "https://voar.dev/en/docs#api",
+  "repository": "https://github.com/owe-br/plugins",
+  "license": "MIT",
+  "keywords": ["voar", "github-actions", "ci", "runners", "usage"],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "voar",
+        "shortDescription": "GitHub Actions jobs and usage",
+        "longDescription": "voar runs your GitHub Actions jobs on machines in São Paulo, Brazil, a new one for each job. This plugin lets your agent read your organization's voar account. It shows the organization's status, its recent jobs and its usage for a month, day by day. For each job it shows the status, the machine size and, when a job did not start, the reason. It only reads. It cannot start jobs or change limits, payments or keys. Only an owner or admin of the GitHub organization can connect it, and they can disconnect it at any time in the organization's settings. voar is not affiliated with GitHub.",
+        "developerName": "Gustavo Salomé",
+        "category": "Developer Tools",
+        "capabilities": [
+          "See recent GitHub Actions jobs and their status",
+          "Find out why a job did not start",
+          "Read usage for a month, day by day",
+          "Check that your organization is connected and active"
+        ],
+        "websiteURL": "https://voar.dev/en",
+        "supportURL": "https://voar.dev/en/docs#api",
+        "privacyPolicyURL": "https://voar.dev/en/docs#ai-apps",
+        "defaultPrompt": [
+          "Which of my GitHub Actions jobs on voar are waiting right now, and why?",
+          "Show my voar usage for this month, day by day.",
+          "List my last 20 voar jobs and tell me which ones failed."
+        ],
+        "brandColor": "#f5b700",
+        "brandColorDark": "#f5b700",
+        "composerIcon": "./assets/logo.png",
+        "logo": "./assets/logo.png"
+      }
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "dev.voar/voar",
+  "title": "voar",
+  "description": "Read your organization's GitHub Actions jobs and usage on voar. Read-only.",
+  "version": "1.0.0",
+  "websiteUrl": "https://voar.dev/en/docs#api",
+  "icons": [
+    {
+      "src": "https://voar.dev/web-app-manifest-512x512.png",
+      "mimeType": "image/png",
+      "sizes": ["512x512"]
+    },
+    {
+      "src": "https://voar.dev/icon.svg",
+      "mimeType": "image/svg+xml",
+      "sizes": ["any"]
+    }
+  ],
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://api.voar.dev/mcp"
+    }
+  ]
+}

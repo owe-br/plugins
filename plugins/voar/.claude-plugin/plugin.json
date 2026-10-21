@@ -1,0 +1,19 @@
+{
+  "name": "voar",
+  "version": "1.0.0",
+  "description": "Read your organization's GitHub Actions jobs and usage on voar. Read-only.",
+  "author": {
+    "name": "Gustavo Salomé",
+    "email": "gustavonips@gmail.com",
+    "url": "https://voar.dev/en"
+  },
+  "homepage": "https://voar.dev/en/docs#api",
+  "repository": "https://github.com/owe-br/plugins",
+  "license": "MIT",
+  "keywords": ["voar", "github-actions", "ci", "runners", "usage"],
+  "displayName": "voar",
+  "icon": "./assets/logo.png",
+  "documentationUrl": "https://voar.dev/en/docs#api",
+  "privacyPolicyUrl": "https://voar.dev/en/docs#ai-apps",
+  "supportUrl": "https://github.com/owe-br/plugins/issues"
+}

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- The voar mark: an amber tile with a climbing line over a short ground line, a plane's path
+     at take-off. Master for every square icon. The live copy is LogoMark in
+     packages/ui/src/Logo.tsx: same numbers, so a change lands in both. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+  <title>voar</title>
+  <rect width="24" height="24" rx="6" fill="#f5b700"/>
+  <path d="M5.5 17.5 18.5 8" stroke="#161614" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+  <path d="M5.5 19.75h6.5" stroke="#161614" stroke-width="2" stroke-linecap="round" fill="none"/>
+</svg>
