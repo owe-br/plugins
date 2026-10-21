@@ -29,7 +29,7 @@ Live pages change, so answers are described by their shape, not their numbers.
 | "What is trending in Brazil right now?"                                             | Calls `list_trending` with `geo` BR. Shows rising searches with the news behind each. If the source refuses, the last saved board comes back marked `stale` with its capture time.        |
 | "What news was published about urban gardening this week?"                          | Calls `search_news` with `q` and `recency` week. Shows headlines, publishers and dates.                                                                                                   |
 | "Find YouTube videos about urban gardening from the last month, most viewed first." | Calls `search_youtube` with `recency` month and `sort` views. Shows titles, channels, view counts and durations.                                                                          |
-| "Summarize https://example.com."                                                    | Calls `read_website`. Shows the page's title and readable text.                                                                                                                           |
+| "Summarize https://socially.run."                                                   | Calls `read_website`. Shows the page's title and readable text.                                                                                                                           |
 | "Which platforms does socially read, and which work right now?"                     | Calls `list_platforms`. Shows what each platform supports and the health of each source.                                                                                                  |
 
 ## Should not work
