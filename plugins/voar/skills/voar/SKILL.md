@@ -1,6 +1,6 @@
 ---
 name: voar
-description: "Read an organization's GitHub Actions jobs and usage on voar (voar.dev) through its MCP tools: the account summary, recent jobs with their machine size, status and the reason a job did not start, and a month's usage day by day. Use when the user asks why a CI job is stuck in the queue on voar, which machine size a job ran on, how many minutes a month used, or whether their voar organization is active. Requires the voar MCP server (guide: https://voar.dev/en/docs#api)."
+description: "Read an organization's GitHub Actions jobs and usage on voar (voar.dev) through its MCP tools: the account summary, recent jobs with their machine size, status and the reason a job did not start, and a month's usage day by day. Use when the user asks why a CI job is stuck in the queue on voar, which machine size a job ran on, how many minutes (units) a month used, or whether their voar organization is active. Requires the voar MCP server (guide: https://voar.dev/en/docs#api)."
 ---
 
 # voar workflows
@@ -42,7 +42,7 @@ voar has no value for it yet, not zero.
 - `activeRunners` (machines starting or running now), `queuedJobs` (jobs waiting for a machine) and
   `concurrencyLimit` (the most machines at once).
 - `freeUnitsPerMonth`, `freeUnitsUsed` and `freeResetsAt`. What is left is
-  `freeUnitsPerMonth - freeUnitsUsed`: there is no field for it.
+  `freeUnitsPerMonth - freeUnitsUsed`. There is no field for it, and at 0 or below none are left.
 - `currency` (`brl`, `usd` or `eur`), `balanceMicros`, `unitPriceMicros` and
   `lowBalanceAlertMicros`.
 - `repositorySelection` (`all`, `selected` or null), `installationSettingsUrl`, `plan`,
@@ -52,8 +52,9 @@ Money is in micros: 1,000,000 micros is 1.00 of the `currency`. For example, `ba
 25500000 in `brl` is R$ 25.50. Show the amount in the account's own currency. Never convert it or
 guess a price.
 
-A unit is one minute on the smallest machine (`2vcpu`). Bigger machines use more units a minute:
-`4vcpu` uses 2, `8vcpu` uses 4 and `16vcpu` uses 8.
+A unit is one minute on the `2vcpu` machine. The `4vcpu`, `8vcpu` and `16vcpu` machines count 2, 4
+and 8 units a minute. `freeUnitsPerMonth`, `freeUnitsUsed`, `billedUnits` and `units` are all in
+units.
 
 `list_jobs` takes `limit` (1 to 100, default 50) and `before`, an ISO 8601 date and time with a
 zone, such as `2026-10-21T12:00:00Z`. It returns jobs newest first by `queuedAt`. For the next page,
@@ -73,8 +74,8 @@ pass the last job's `queuedAt` as `before`. Each job has:
 `get_usage` takes `month`, as `YYYY-MM` (for example `2026-10`). Without it, the current month. A
 month runs on São Paulo time. `data` has `month`, `totals` (`jobs`, `units`, `costMicros`) and `days`:
 one row for each day that had finished jobs (`day`, `jobs`, `units`, `costMicros`). A day with no
-finished jobs has no row. Jobs still running are not counted yet. The answer carries no currency, so
-read `currency` from `get_account`.
+finished jobs has no row. Jobs still running are not counted yet. The answer carries no currency:
+`costMicros` is in the `currency` that `get_account` returns.
 
 ## Why a job did not start
 
