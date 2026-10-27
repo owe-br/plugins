@@ -2,8 +2,8 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "app.colding/colding",
   "title": "colding",
-  "description": "Read and answer email, manage contacts and campaigns, check addresses and send app mail.",
-  "version": "1.0.0",
+  "description": "Send and read email through connected mailboxes. Warm them up, check addresses and run campaigns.",
+  "version": "1.0.1",
   "websiteUrl": "https://colding.app/en/docs",
   "icons": [
     {

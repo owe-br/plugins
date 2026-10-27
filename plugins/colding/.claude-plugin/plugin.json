@@ -1,8 +1,8 @@
 {
   "name": "colding",
   "displayName": "colding",
-  "version": "1.0.0",
-  "description": "Read and answer email, manage contacts and campaigns, check addresses and send app mail.",
+  "version": "1.0.1",
+  "description": "Send and read email through connected mailboxes. Warm them up, check addresses and run campaigns.",
   "author": {
     "name": "Gustavo Salomé",
     "email": "gustavonips@gmail.com",
