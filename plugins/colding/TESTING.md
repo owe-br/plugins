@@ -13,14 +13,14 @@ launch campaigns, spend address checks or change a webhook during install tests.
 
 ## Prompts that should load the skill
 
-| Prompt | Expected behavior |
-| --- | --- |
-| "Use colding to list my latest unread threads. Do not mark them read." | Load the skill and use read tools only. |
-| "In my colding workspace, draft a reply to the latest thread. Do not send it." | Load the skill, read the thread and create a draft only with the needed permission. |
-| "Import leads.csv into my colding contacts. Show me the preview first." | Load the skill and use the file upload flow when a shell is available. Do not commit the import before approval. |
-| "Help me connect my mailbox to colding with a setup key." | Load the skill, explain whole-workspace setup access and distinguish login access from Microsoft or Google sign-in. |
-| "Set up my colding webhook. I have setup and read permission." | Load the skill and read the current webhook first. If a person saved it, ask for a manage_webhook handoff instead of changing it. |
-| "Use colding to check the status of my campaign without launching it." | Load the skill and inspect the campaign without sending. |
+| Prompt                                                                         | Expected behavior                                                                                                                 |
+| ------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------- |
+| "Use colding to list my latest unread threads. Do not mark them read."         | Load the skill and use read tools only.                                                                                           |
+| "In my colding workspace, draft a reply to the latest thread. Do not send it." | Load the skill, read the thread and create a draft only with the needed permission.                                               |
+| "Import leads.csv into my colding contacts. Show me the preview first."        | Load the skill and use the file upload flow when a shell is available. Do not commit the import before approval.                  |
+| "Help me connect my mailbox to colding with a setup key."                      | Load the skill, explain whole-workspace setup access and distinguish login access from Microsoft or Google sign-in.               |
+| "Set up my colding webhook. I have setup and read permission."                 | Load the skill and read the current webhook first. If a person saved it, ask for a manage_webhook handoff instead of changing it. |
+| "Use colding to check the status of my campaign without launching it."         | Load the skill and inspect the campaign without sending.                                                                          |
 
 ## Prompts that should not load the skill
 
@@ -62,7 +62,7 @@ not mean a closed feature is available. Record the tools each client actually lo
 substitute a count from the server catalog.
 
 | Client | Version | Date | Install command | Sign-in result | Tools loaded with a Read key | Tools loaded with a full key |
-| --- | --- | --- | --- | --- | --- | --- |
+| ------ | ------- | ---- | --------------- | -------------- | ---------------------------- | ---------------------------- |
 
 Commands to try in T4, not proved instructions:
 

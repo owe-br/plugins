@@ -31,14 +31,14 @@ Three rules govern every call:
 
 A key belongs to one workspace and holds one or more of seven permissions:
 
-| Grant           | Console option       | What it allows                                                                                                                        |
-| --------------- | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| `read`          | Read                 | Read mail, drafts, mailboxes, contacts, campaigns, address checks, send status, deliverability and events.                               |
-| `operate`       | Operate              | Edit drafts, contacts, labels, segments, saved replies and campaigns; organize threads; pause work; create handoffs.                      |
+| Grant           | Console option       | What it allows                                                                                                                             |
+| --------------- | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| `read`          | Read                 | Read mail, drafts, mailboxes, contacts, campaigns, address checks, send status, deliverability and events.                                 |
+| `operate`       | Operate              | Edit drafts, contacts, labels, segments, saved replies and campaigns; organize threads; pause work; create handoffs.                       |
 | `send`          | Send outreach        | Send drafts, replies and tests, launch campaigns, add leads to running campaigns, start mailbox warmup and cancel outreach sends.          |
-| `validate`      | Check addresses      | Start, retry and cancel email address checks (single or batch).                                                                        |
-| `transactional` | Send app email       | Send app email through a connected transactional or send-only mailbox, and cancel those sends.                                         |
-| `inboxes`       | Manage agent inboxes | Create, update and delete agent inboxes, only if the plan allows them. No plan for sale includes them.                                   |
+| `validate`      | Check addresses      | Start, retry and cancel email address checks (single or batch).                                                                            |
+| `transactional` | Send app email       | Send app email through a connected transactional or send-only mailbox, and cancel those sends.                                             |
+| `inboxes`       | Manage agent inboxes | Create, update and delete agent inboxes, only if the plan allows them. No plan for sale includes them.                                     |
 | `setup`         | Set up the workspace | Connect mailboxes by login, replace logins, confirm addresses, manage tracking domains and set the postal address. Webhooks need Read too. |
 
 `operate` does not include `read`. Most workflows that edit or organize also read, so ask for
@@ -91,8 +91,9 @@ webhook secrets or upload URLs into chat, logs, handoff notes or plugin files.
 
 1. `detect_mailbox_settings` with `email` reads the provider's published servers (`read`).
    `connect_mailbox` takes `email`, `smtp` and `imap`; `connect_send_only_mailbox` takes `email`
-   and `smtp` for an app's sending service (`setup`). Use the provider's actual login fields from
-   the tool schema. Do not guess them. A setup key connects one mailbox at a time, not a file.
+   and `smtp` for an app's sending service (`setup`). Use the login details your provider gave
+   you, following the tool's schema. Do not guess them. A setup key connects one mailbox at a time,
+   not a file.
 2. `update_mailbox_credentials` takes `mailboxId`, `smtp` and, for a mailbox that receives,
    `imap` (`setup`). Microsoft and Google sign-in stays with a person; use a handoff instead.
 3. A working login does not prove the address belongs to the workspace. Call
@@ -201,7 +202,7 @@ when the user does not want to spend checks.
   `update_contact_import` if needed, then `commit_contact_import` with `importId` and its current
   `revision`. Committing changes contacts; requesting an upload and reading a preview do not.
   An `idempotencyKey` replay of `create_contact_import_upload` returns `url: null`; if you lost
-  the first answer, use a new key to request a fresh upload URL, not to commit twice.
+  the first answer, use a new `idempotencyKey` to request a fresh upload URL, not to commit twice.
   Without a shell, use `upsert_contacts` in batches within the tool's limit or ask a person to
   upload the file in the console. Small files can use `create_contact_import` with `fileName`
   and `csv` (CSV text) or `content` (base64 bytes); the whole MCP call must fit its 1 MB limit.
@@ -242,22 +243,22 @@ When a task needs a person, or the key lacks `setup`, call `create_handoff` (nee
 with a supported `kind`. A handoff is a request with a console link, not extra permission.
 These are the 14 kinds:
 
-| Kind                         | What to ask for and which arguments to send                                                                                                                     |
-| ---------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `connect_mailbox`             | Connect a mailbox, including Microsoft or Google sign-in. Say which mailbox in `note`. A setup key can connect by login without a handoff.                         |
+| Kind                         | What to ask for and which arguments to send                                                                                                                        |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `connect_mailbox`            | Connect a mailbox, including Microsoft or Google sign-in. Say which mailbox in `note`. A setup key can connect by login without a handoff.                         |
 | `update_mailbox_credentials` | Replace a mailbox's login or sign in again. Send `mailboxId`. A setup key can replace password logins without a handoff.                                           |
 | `manage_team`                | Invite someone, change a role, remove a member or transfer ownership. Describe the change in `note`.                                                               |
 | `manage_billing`             | Open checkout or billing settings. Completion means the owner opened it, not that payment succeeded; read `get_billing` afterwards.                                |
 | `accept_aup`                 | Accept the current acceptable use policy after 403 `AUP_REQUIRED`. Only an owner can accept it.                                                                    |
-| `manage_report_hook`         | Turn a send-only mailbox's bounce/complaint reports on, rotate its secret or turn them off. Send `mailboxId` and say which change in `note`.                        |
-| `send_lead_anyway`           | Approve sending to one lead whose address check was not confirmed. Send `campaignId`, `contactId` and the reason in `note`.                                         |
-| `manage_mail_domains`        | Add or remove a mail domain. Describe its name and use in `note`. This does not open a feature the plan does not allow.                                             |
-| `manage_sender_addresses`    | Create, change or delete a sender address. Describe the address and reply target in `note`. This does not open app email from colding's servers.                    |
-| `confirm_mailbox_address`    | Confirm a connected mailbox's address. Send `mailboxId`. It completes when colding verifies the address, including a code supplied by a setup key.                  |
+| `manage_report_hook`         | Turn a send-only mailbox's bounce/complaint reports on, rotate its secret or turn them off. Send `mailboxId` and say which change in `note`.                       |
+| `send_lead_anyway`           | Approve sending to one lead whose address check was not confirmed. Send `campaignId`, `contactId` and the reason in `note`.                                        |
+| `manage_mail_domains`        | Add or remove a mail domain. Describe its name and use in `note`. This does not open a feature the plan does not allow.                                            |
+| `manage_sender_addresses`    | Create, change or delete a sender address. Describe the address and reply target in `note`. This does not open app email from colding's servers.                   |
+| `confirm_mailbox_address`    | Confirm a connected mailbox's address. Send `mailboxId`. It completes when colding verifies the address, including a code supplied by a setup key.                 |
 | `manage_tracking_domains`    | Add or remove a tracking domain. Describe the hostname and change in `note`. A setup key can do this itself when asked.                                            |
 | `manage_webhook`             | Save or delete the workspace webhook. Describe the approved endpoint and change in `note`. Use this for a webhook a person saved, even if you have setup and read. |
-| `manage_settings`            | Save the postal address printed under campaign emails. Describe the address in `note`; this kind is not for other workspace settings.                            |
-| `add_dns_records`            | Add a connected mailbox's SPF/DMARC records or a tracking domain's CNAME. Send exactly one of `mailboxId` and `trackingDomainId`.                                    |
+| `manage_settings`            | Save the postal address printed under campaign emails. Describe the address in `note`; this kind is not for other workspace settings.                              |
+| `add_dns_records`            | Add a connected mailbox's SPF/DMARC records or a tracking domain's CNAME. Send exactly one of `mailboxId` and `trackingDomainId`.                                  |
 
 Only `update_mailbox_credentials`, `manage_report_hook` and `confirm_mailbox_address` take
 `mailboxId`, apart from the DNS kind. Only `send_lead_anyway` takes `campaignId` and `contactId`.
