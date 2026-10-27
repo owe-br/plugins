@@ -1,8 +1,8 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "colding",
-  "version": "1.0.0",
-  "description": "Read and answer email, manage contacts and campaigns, check addresses and send app mail.",
+  "version": "1.0.1",
+  "description": "Send and read email through connected mailboxes. Warm them up, check addresses and run campaigns.",
   "author": {
     "name": "Gustavo Salomé",
     "email": "gustavonips@gmail.com",
@@ -17,14 +17,16 @@
       "interface": {
         "displayName": "colding",
         "shortDescription": "Email through your mailboxes",
-        "longDescription": "colding connects the mailboxes in your workspace so your agent can read and organize threads, write and send replies, check email addresses, run outreach campaigns, send your app's own emails, and follow delivery events. Each connection belongs to one workspace and carries only the permissions the workspace owner selects, starting with reading alone. The owner can also limit a connection to chosen mailboxes, campaigns and daily or total send limits, and can revoke it at any time in the console.",
+        "longDescription": "Your agent sends and reads email from mailboxes you connect to colding. It can warm them up, check addresses, manage contacts, run campaigns and answer replies. It can also send your app's receipts and sign-in links from a mailbox you keep for that. Each connection belongs to one workspace. The owner chooses its permissions and limits, with Read selected to start, and can revoke it in the console's API keys list. Set up the workspace is an optional permission for mailbox logins, address confirmation, tracking domains and the postal address. It works across the whole workspace and stops working if the key's maker is no longer the owner. With Read too, a key can set up a webhook when none exists or manage one a key saved. A webhook a person saved stays with a person. Agent inboxes and app email from colding's own servers are not available on any plan for sale. Outgoing file attachments and a Python SDK are not available.",
         "developerName": "Gustavo Salomé",
         "category": "Communication",
         "capabilities": [
-          "Read threads, messages and attachments from connected mailboxes",
+          "Read threads and messages from connected mailboxes",
           "Write drafts, reply to messages and organize the inbox",
           "Manage contacts, segments, campaigns and address checks",
-          "Send transactional emails and follow delivery events"
+          "Send app email through a connected transactional or send-only mailbox",
+          "Connect mailboxes by login and manage workspace setup with the owner's permission",
+          "Follow delivery events and set up a webhook within the key's permissions"
         ],
         "websiteURL": "https://colding.app/en",
         "supportURL": "https://colding.app/en/docs",
