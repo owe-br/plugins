@@ -4,7 +4,7 @@
   "title": "colding",
   "description": "Send and read email through connected mailboxes. Warm them up, check addresses and run campaigns.",
   "version": "1.0.1",
-  "websiteUrl": "https://colding.app/en/docs",
+  "websiteUrl": "https://colding.app/en/docs/connect",
   "icons": [
     {
       "src": "https://colding.app/web-app-manifest-512x512.png",
