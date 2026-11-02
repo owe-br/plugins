@@ -13,7 +13,8 @@ studio; the agent can't.
 - The SmartGenius MCP server at `https://api.smartgenius.app/mcp`. Its tools act as you, with
   your role in the workspace.
 - A skill that teaches the agent the workflows: pick a profile, make a post and wait for it, draw
-  images, and read each error before retrying.
+  images, and read each error before retrying. In a workspace that has blogs, it also covers
+  blog articles and profiles for brands with no Instagram.
 
 ## Install
 
