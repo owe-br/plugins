@@ -66,6 +66,12 @@
       "source": "./plugins/colding",
       "description": "Read and answer email, manage contacts and campaigns, check addresses and send app mail.",
       "category": "communication"
+    },
+    {
+      "name": "ideare",
+      "source": "./plugins/ideare",
+      "description": "Read a small business's approved brand (logo, colors, fonts and every file), change its draft, check it, and draw AI symbols and art in its style.",
+      "category": "design"
     }
   ]
 }

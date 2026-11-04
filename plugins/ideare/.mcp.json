@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "ideare": {
+      "type": "http",
+      "url": "https://api.ideare.app/mcp"
+    }
+  }
+}
