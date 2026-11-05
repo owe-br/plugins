@@ -1,6 +1,6 @@
 ---
 name: ideare
-description: "Work with a small business's brand on ideare over its MCP tools (or its REST API): read an approved brand and the link to each file (logo, site icons, share cards, social sizes, tokens, business card), put it in a codebase with `npx ideare init`, change the brand's draft, check it, ask the owner to approve, and draw AI symbols and art in the brand's style. Use when the user mentions their brand, logo, brand kit, colors, fonts, favicon or share card on ideare, an ideare.app/b/<slug> link, or asks to dress a site in their brand. Requires the ideare MCP server or an ideare API key (https://ideare.app/en)."
+description: "Work with a small business's brand on ideare over its MCP tools (or its REST API): read an approved brand and the link to each file (logo, site icons, share cards, social sizes, tokens, business card), put it in a codebase with `npx ideare init`, change the brand's draft, check it, ask the owner to approve, draw AI symbols and art in the brand's style, and make social posts from the brand's templates. Use when the user mentions their brand, logo, brand kit, colors, fonts, favicon or share card on ideare, an ideare.app/b/<slug> link, or asks to dress a site in their brand. Requires the ideare MCP server or an ideare API key (https://ideare.app/en)."
 ---
 
 # ideare workflows
@@ -116,9 +116,36 @@ an idea, and the owner picks one. From here:
    put it in the masters as `mark.svg` with `mark.source.kind` set to `ai`, then `update_draft`.
    An art run's `result.assetId` is in `list_assets`, with a download link that expires.
 
+To stop a run that is still going, `cancel_run` with its `id`. What it already spent on finished
+pictures stays spent; the rest comes back.
+
 **One request, one `idempotencyKey`.** If a call times out or its answer is lost, call again with
 the SAME key: you get the first answer back and nothing is spent twice. A new key (or none) makes
 a second run and spends again. Never call again while a run is still going.
+
+## Make a post
+
+Daily posts come from the brand's own templates, drawn with its approved logo, colors and fonts.
+
+- `render_template` with `slug` and `template` (`promotion`, `hours`, `menu`, `pix`,
+  `new-product`, `status-offer` or `carousel`), plus `size` (`ig-post` 1080x1350, `ig-square`,
+  `ig-story`, `wa-status` or `share-card`) and `text` for the template's words. It answers with a
+  picture link that expires (`expiresAt`). Nothing is saved.
+- The owner's saved posts: `list_designs` (with `brand` to filter), then `render_design` with the
+  design's `id` (and `page` for a carousel) for a PNG or JPEG of it. Editing a post is the studio's
+  job: send the owner there.
+
+## Undo a version
+
+`restore_version` with `slug`, `version` and the draft's `draftRev` puts an older approved version
+back in the draft. It publishes nothing: approve it like any other change.
+
+## Bring a brand from a folder
+
+A whole folder or zip of brand files (logos, icons, fonts, a guidelines PDF) is sorted into the
+right places by `npx ideare import <folder|zip>` or the studio's folder door. Both show where each
+file goes before anything changes. Over MCP, `get_folder_import` reads such a run and
+`apply_import` uses it once the owner agrees with the review.
 
 ## Errors
 
@@ -177,6 +204,11 @@ The same operations are REST routes on `https://api.ideare.app/v1`, with the sam
 | `generate_text`    | `POST /v1/ai/text`                                                   |
 | `check_names`      | `POST /v1/names/check`                                               |
 | `get_usage`        | `GET /v1/usage`                                                      |
+| `cancel_run`       | `DELETE /v1/runs/{id}`                                               |
+| `restore_version`  | `POST /v1/brands/{slug}/versions/{version}/restore`                  |
+| `render_template`  | `POST /v1/brands/{slug}/render`                                      |
+| `list_designs`     | `GET /v1/designs`                                                    |
+| `render_design`    | `POST /v1/designs/{id}/render`                                       |
 
 Success answers are `{"data": ...}`. The full reference is at `https://api.ideare.app/openapi.json`.
 
