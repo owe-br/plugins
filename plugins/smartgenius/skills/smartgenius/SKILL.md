@@ -27,12 +27,20 @@ Two facts shape every call:
    a `requestId` you make up (a new UUID). Optional: `format` (`carousel` by default, `post` or
    `story`), `slides` (carousel only), `objective`, `tone`, `cta`, and `links` (up to 5 pages SmartGenius
    reads before planning). It answers at once with the post's `id`, before anything is drawn.
+   No idea yet? Send `research: true` instead of `idea` (see "No idea yet" below).
 3. `get_post` with `profile`, `postId` (that `id`) and `wait: 30`. Repeat while `making.status` is `queued` or
    `running`. A carousel takes a few minutes; tell the user it is on its way instead of going
    quiet.
 4. When it is `done`, show the user the slides' text, the caption and the `studioUrl`. If it
    `failed`, say so with `making.failure` and offer to try again. `cancelled` means a person
    stopped it in the studio: leave it.
+
+**No idea yet.** `create_post` and `create_article` take `research: true` in place of `idea`:
+SmartGenius picks the subject itself, the one its own schedule would pick now (the profile's
+saved ideas first, then today's research on its niche, a date, its numbers, its own subjects).
+Send one of the two. With neither, the call is a `VALIDATION_ERROR`; with `research: true` and
+nothing to pick from, a `CONFLICT`. Neither is charged. A typed `idea` always wins: ask the user
+for one when they have something in mind.
 
 **One post, one `requestId`.** If a `create_post` call times out or its answer is lost, call it
 again with the SAME `requestId`: you get the first answer back and nothing is spent twice. A
@@ -41,11 +49,7 @@ new `requestId` (or none) makes a second post and spends the images again. The i
 
 ## Blogs
 
-Blogs are not on for every Espaço yet. Where they are off, `list_profiles` has no `blog` field,
-the three blog tools below do not exist over MCP, and over REST they answer `NOT_FOUND`. Do not
-promise a blog to a user whose Espaço does not show one: tell them the Espaço has no blogs yet.
-
-Where they are on, `list_profiles` shows each profile's `hasInstagram` and its `blog`: `id`,
+`list_profiles` shows each profile's `hasInstagram` and its `blog`: `id`,
 `name`, `url` and `state` (`soon` before the first article is published, then `live`, or `off`),
 or `blog: null` when the profile has none. A profile with `hasInstagram: false` is a brand with
 no Instagram: its `profile` is only its name in SmartGenius, never an `@`.
@@ -55,7 +59,8 @@ no Instagram: its `profile` is only its name in SmartGenius, never an `@`.
 1. `list_profiles`: pick a profile whose `blog` is not null.
 2. `create_article` with `profile`, `idea` (what the article is about, up to 2,000 characters)
    and a `requestId` you make up. It answers at once, with the article's `id` and `credits`
-   (what the call cost), before anything is written.
+   (what the call cost), before anything is written. No idea yet? Send `research: true`
+   instead of `idea` (see "No idea yet" below).
 3. `get_article` with `profile`, `articleId` (that `id`) and `wait: 30`. Repeat while
    `making.status` is `queued` or `running`. An article takes a few minutes.
 4. When `making.status` is `succeeded`, show the user the `title`, the `dek`, the `body` and the
@@ -88,7 +93,8 @@ the same too: the same `requestId` with another body is a `VALIDATION_ERROR`.
 
 **What `get_article` returns.** `state` (`draft`, `approved`, `scheduled`, `publishing`, `live`,
 `live_changed`, `off` or `failed`), `making`, `title`, `dek`, `body`, `links`, `tags`, `language`
-and `studioUrl`. The `body` is a small Markdown subset. A link in it looks like `[words](L3)`: `L3`
+and `studioUrl`. The `body` is a small Markdown subset: paragraphs, `##` headings, lists (`- ` or `1. ` lines),
+quotes (`> ` lines) and links. A link in it looks like `[words](L3)`: `L3`
 is the `id` of an entry in `links`, which has the `label` and the real `href`. `get_article` only
 reads. It never makes a second article.
 
