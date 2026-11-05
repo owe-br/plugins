@@ -1,0 +1,20 @@
+{
+  "name": "ideare",
+  "displayName": "ideare",
+  "version": "0.1.0",
+  "description": "Read a small business's approved brand (logo, colors, fonts and every file), change its draft, check it, and draw AI symbols and art in its style.",
+  "author": {
+    "name": "Gustavo Salomé",
+    "email": "gustavonips@gmail.com",
+    "url": "https://ideare.app"
+  },
+  "homepage": "https://ideare.app/en/docs",
+  "repository": "https://github.com/owe-br/plugins",
+  "license": "MIT",
+  "keywords": ["ideare", "brand", "logo", "brand kit", "design tokens"],
+  "icon": "./assets/logo.png",
+  "documentationUrl": "https://ideare.app/en/docs",
+  "privacyPolicyUrl": "https://ideare.app/en/privacy/ai-apps",
+  "termsOfServiceUrl": "https://ideare.app/en/terms",
+  "supportUrl": "https://github.com/owe-br/plugins/issues"
+}

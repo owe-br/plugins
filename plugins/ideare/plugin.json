@@ -1,0 +1,45 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ideare",
+  "version": "0.1.0",
+  "description": "Read a small business's approved brand (logo, colors, fonts and every file), change its draft, check it, and draw AI symbols and art in its style.",
+  "author": {
+    "name": "Gustavo Salomé",
+    "email": "gustavonips@gmail.com",
+    "url": "https://ideare.app"
+  },
+  "homepage": "https://ideare.app/en/docs",
+  "repository": "https://github.com/owe-br/plugins",
+  "license": "MIT",
+  "keywords": ["ideare", "brand", "logo", "brand kit", "design tokens"],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "ideare",
+        "shortDescription": "Your brand kit and every file",
+        "longDescription": "ideare makes a small business's brand kit: the logo in every version, colors and fonts, site icons, share cards, every social size, an email signature, a business card and guidelines in plain words. With this app you can read an approved brand and the link to each of its files, change the brand's draft, check it the way an approval does, and draw AI symbols and art in its style. Nothing goes public until an owner approves it in the ideare studio.",
+        "developerName": "Gustavo Salomé",
+        "category": "Creativity",
+        "capabilities": [
+          "Read an approved brand and the link to each file",
+          "Change a brand's draft and check it",
+          "Ask the owner to approve a change",
+          "Draw AI symbols and art in the brand's style"
+        ],
+        "websiteURL": "https://ideare.app/en",
+        "supportURL": "https://github.com/owe-br/plugins/issues",
+        "privacyPolicyURL": "https://ideare.app/en/privacy/ai-apps",
+        "termsOfServiceURL": "https://ideare.app/en/terms",
+        "defaultPrompt": [
+          "Show me my brand's logo and colors.",
+          "Give me the link to my brand's share card.",
+          "Check my brand and tell me what to fix."
+        ],
+        "brandColor": "#4b1e4f",
+        "brandColorDark": "#e3b8e6",
+        "composerIcon": "./assets/logo.png",
+        "logo": "./assets/logo.png"
+      }
+    }
+  }
+}
