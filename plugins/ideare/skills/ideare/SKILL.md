@@ -61,11 +61,16 @@ Don't copy files by hand. In the project, run:
 npx ideare init <slug>
 ```
 
-It needs no account. It detects Next.js (App Router), Vite or plain HTML, prints the brand's name
+It needs no account. It detects Next.js (App or Pages Router), Vite or plain HTML, prints the brand's name
 and domain, lists every file it adds or replaces and backs up the project's own, then writes the
 icons, the share cards, the theme tokens and `ideare.lock.json`. After that:
 
 - `npx ideare pull` brings a newer approved version; `--frozen` installs exactly the lock.
+- `npx ideare pull --pr` previews the approved files, then opens a draft GitHub pull request.
+  It needs the user's git and GitHub CLI login, a committed cloud setup and the default branch's
+  current tip. It works in a separate worktree, leaving the user's branch and staging area alone.
+  Agents can pass `--yes --json`. Brand approval and code review are separate: a PR never approves
+  a private brand draft.
 - `npx ideare check` fails when a brand file was edited by hand. Put it in CI.
 - With shadcn/ui: `npx shadcn@latest add https://cdn.ideare.app/b/<slug>/latest/registry/theme.json`.
 - An AI site builder (Lovable, v0, Bolt) takes `docs/prompt.md` as it is.
@@ -88,7 +93,35 @@ icons, the share cards, the theme tokens and `ideare.lock.json`. After that:
 Copy in the masters follows the brand's own rules: no em dash, no exclamation marks, sentence
 case, and none of the words in `voice.neverSay`. `check_brand` flags a line that breaks them.
 
-## Start a brand
+## Import an existing brand
+
+Keep what the owner already uses. Do not send an existing brand through new-logo directions.
+
+1. `import_brand` accepts up to 5 different public site or profile links in `links`, uploaded
+   `files` (`assetId` and `path`) and optional local style files in `repo`. Use one request and one
+   `idempotencyKey` for the combined import. Files can be uploaded through the studio, the CLI
+   or the API's signed upload flow; a local filename alone does not send its bytes.
+2. Follow its run, then `get_folder_import` with `runId`. It shows where each result came from,
+   conflicting colors, fonts and words, and the original beside a traced logo. Keep uploaded
+   originals first. A failed-quality trace is not permission to replace the owner's logo.
+3. Let the owner choose where findings differ, then `apply_import` with a fresh `idempotencyKey`,
+   `runId` and the review's `moves`, `licensed` and `choices`. Use the choice IDs the review returns.
+   For an existing draft,
+   include its `draftRev`. This saves one private draft, never a public version.
+4. A failed link does not discard the rest. Continue with `import_brand`, `retryOf` set to the
+   review's run ID, and only failed links or genuinely new assets. If that continuation's answer
+   is lost, retry its same payload and key, not a fresh import.
+
+A repository is another input, not a URL we clone or execute. Locally,
+`npx ideare init --from-code` reads CSS colors, Tailwind settings and logo files.
+Over MCP, `read_repo` reads selected style-file excerpts and returns colors and font choices;
+`import_brand` can include the same files in `repo` for one combined review. Never send env files,
+credentials or the whole repository. To keep a logo, upload its actual file too.
+
+Imports and draft writes need a key allowed to write. Free-plan keys only read; an owner can
+use the studio's import flow for free.
+
+## Start a new brand
 
 The studio (studio.ideare.app) is the easy path: it draws 3 or 4 complete looks from a name and
 an idea, and the owner picks one. From here:
@@ -139,8 +172,10 @@ Daily posts come from the brand's own templates, drawn with its approved logo, c
 
 ## Undo a version
 
-`restore_version` with `slug`, `version` and the draft's `draftRev` puts an older approved version
-back in the draft. It publishes nothing: approve it like any other change.
+`restore_version` with `slug`, `version` and the draft's `draftRev` brings an older version back
+through the same approval rules. Read its outcome: `proposed` waits for the owner; `approving`
+means an owner-authorized publishing key started a new version, whose run you follow. It never
+changes the old version. Do not send another approval to force a proposal through.
 
 ## Bring a brand from a folder
 
@@ -206,6 +241,10 @@ The same operations are REST routes on `https://api.ideare.app/v1`, with the sam
 | `generate_text`    | `POST /v1/ai/text`                                                   |
 | `check_names`      | `POST /v1/names/check`                                               |
 | `get_usage`        | `GET /v1/usage`                                                      |
+| `import_brand`     | `POST /v1/imports/brand`                                             |
+| `read_repo`        | `POST /v1/imports/repo`                                              |
+| `get_folder_import`| `GET /v1/imports/folder/{runId}`                                      |
+| `apply_import`     | `POST /v1/imports/folder/{runId}/apply`                               |
 | `cancel_run`       | `DELETE /v1/runs/{id}`                                               |
 | `restore_version`  | `POST /v1/brands/{slug}/versions/{version}/restore`                  |
 | `render_template`  | `POST /v1/brands/{slug}/render`                                      |
