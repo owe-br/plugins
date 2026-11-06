@@ -20,9 +20,10 @@ Three facts shape every call:
   approves in one tap in the studio (studio.ideare.app). Say so; never call it again to push it
   through.
 - **Only AI pictures cost credits.** Reading, saving, checking and approving are free.
-  `generate_symbols` costs 1 credit per idea; `generate_art` costs 1 at `1k` and 2 at `2k`. A
-  picture that fails, or a symbol that shows letters, gives its credit back. `get_usage` says
-  what is left.
+  `generate_symbols` costs 2 credits per idea (8 for a batch of 4); `generate_art` costs 1 at
+  `1k` and 2 at `2k`. A picture that fails, or a symbol that shows letters, refunds all its
+  credits. `get_usage` says what is left. A new account's welcome grant is 50 credits, valid for
+  90 days, once per email address. That covers up to 25 symbols, not 50.
 
 ## Read a brand
 
@@ -105,7 +106,8 @@ an idea, and the owner picks one. From here:
 
 ## AI symbols and art
 
-1. Check `get_usage` before a batch, and tell the user what it will cost.
+1. Check `get_usage` before a batch. Say the full cost before you call: 2 credits per symbol,
+   so 4 symbols cost 8 credits. The 50-credit welcome grant covers up to 25 symbols.
 2. `generate_symbols` with `slug`, `count` (1 to 4) and an optional `hint` ("a coffee bean"), or
    `generate_art` with `slug`, `prompt` and `size`. Always send an `idempotencyKey` you make up
    (a new UUID per request). The answer is a run, with what it charged in `meta.credits`.
