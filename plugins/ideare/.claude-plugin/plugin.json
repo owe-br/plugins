@@ -1,8 +1,8 @@
 {
   "name": "ideare",
   "displayName": "ideare",
-  "version": "0.1.0",
-  "description": "Read a small business's approved brand (logo, colors, fonts and every file), change its draft, check it, and draw AI symbols and art in its style.",
+  "version": "0.1.1",
+  "description": "Import an existing brand from links, files or code, keep its files in sync, and make posts.",
   "author": {
     "name": "Gustavo Salomé",
     "email": "gustavonips@gmail.com",
