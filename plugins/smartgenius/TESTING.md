@@ -42,6 +42,7 @@ to disconnect.
 | -------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | "Which Instagram profiles can I make posts for?"                                             | Lists one profile, @smartgenius.app, with its studio link.                                                                                                |
 | "How many images do I have left this month?"                                                 | Says how many of the 100 monthly images are left, how many of today's 30, and when the count resets (the 1st of the month).                               |
+| "What's booked to go out on @smartgenius.app, and what has SmartGenius learned about it?"    | Lists the draft posts (nothing is scheduled) and what SmartGenius learned about the profile. Says Instagram is not connected. Uses no images.             |
 | "Make a 3-slide carousel for @smartgenius.app about planning a week of posts in 15 minutes." | Starts the post, then waits for it (a few minutes). Shows each slide's text, the caption, the hashtags and the studio link. It is a draft. Uses 3 images. |
 | "Draw a photo of a sunlit bakery counter with fresh sourdough loaves."                       | Draws one 1024×1024 image from the prompt as written and returns its link, which works for 7 days. Uses 1 image.                                          |
 | "Draw a 4:5 image for @smartgenius.app that announces a new feature."                        | Draws one image in the profile's look (its colors and visual style) and returns its link. Uses 1 image.                                                   |
@@ -57,7 +58,8 @@ to disconnect.
 ## What each tool can change
 
 Every tool says whether it only reads or adds data, through `readOnlyHint`, `destructiveHint` and
-`openWorldHint`. `list_profiles`, `get_post` and `get_usage` only read. `create_post` and
+`openWorldHint`. `list_profiles`, `get_post`, `get_usage`, `get_profile`, `list_posts`,
+`list_media`, `list_suggestions` and `get_routine` only read, and use no images. `create_post` and
 `generate_image` add a draft or an image and use images from the monthly count. No tool edits,
 deletes or publishes anything. Tools act as the signed-in person, with that person's role in the
 Espaço. A tool can't do anything that person couldn't do in the app.

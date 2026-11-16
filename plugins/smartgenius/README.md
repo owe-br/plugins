@@ -14,7 +14,10 @@ studio; the agent can't.
   your role in the workspace.
 - A skill that teaches the agent the workflows: pick a profile, make a post and wait for it, draw
   images, and read each error before retrying. In a workspace that has blogs, it also covers
-  blog articles and profiles for brands with no Instagram.
+  blog articles and profiles for brands with no Instagram. It also teaches the agent to read
+  what SmartGenius knows about a profile: its Instagram connection, what it learned from the
+  posts, the posts and how they did on Instagram, the suggestions, and Autopilot. Reading uses no
+  images.
 
 ## Install
 
