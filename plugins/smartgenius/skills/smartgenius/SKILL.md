@@ -21,7 +21,7 @@ Two facts shape every call:
 
 ## Read what SmartGenius knows
 
-Five tools only read. They spend no credits, change nothing and never reach Instagram, so call
+Seven tools only read. They spend no credits, change nothing and never reach Instagram, so call
 them whenever they help: before you plan a post, or when the user asks how a profile is doing or
 what is coming up. Each takes `profile`.
 
@@ -57,8 +57,28 @@ what is coming up. Each takes `profile`.
   which says why it cannot run as set (null when it can). You cannot change Autopilot: send the
   user to the studio for that.
 
+- `get_insights`: stored daily account totals over the last `days` (7, 28 or 90, default 28)
+  completed local days, in `timezone`. `days[]` has `reach`, `views`, `accountsEngaged`,
+  `totalInteractions`, `followsAndUnfollows`, `profileLinksTaps`, `followersCount`, `followsCount`
+  (accounts it follows), `mediaCount`, `follows` and `unfollows`. A missing number is null.
+  The last two stay unknown until Meta's breakdown is verified; never derive them from the
+  aggregate. `followers` has `now`, `asOf` (a local date), `change7d` and `change28d`; a change
+  needs saved counts exactly that many days apart. `available: false` is not zero:
+  `reason: not_connected` asks the person to connect again in the studio, `scope_missing` asks
+  them to reconnect with insights permission, `no_data_yet` means wait for the daily read
+  (Meta may lag 48 hours). Basic follower snapshots can exist without insights permission.
+  Do not sum daily reach as unique people across a week.
+- `get_best_times`: takes `days` (90 or 180, default 90) and `metric` (default
+  `totalInteractions`; also `reach`, `saved`, `shares`, `likes`, `comments`, `views`). With at
+  least 12 posts carrying that metric, `basis: engagement` means scores are average lifetime
+  counts per post. Below that floor, `basis: posting_times` only describes when the profile
+  posts, not what performs better. `sample` counts posts used. `byWeekday` uses 0=Sunday,
+  `byHour` uses 0..23 in `timezone`, and `best` holds up to three observed weekday/hour pairs.
+  Each bucket carries `sample` and `score`; an empty one has a null score. No posts means
+  `best: []`. Do not call these audience-online hours or promise a better result.
+
 **Numbers need Instagram's permission.** `numbers` is null for a post whose numbers SmartGenius
-never read. It reads them for recent posts, and only while `get_profile` says
+never read. It refreshes them by the post's age, and only while `get_profile` says
 `canReadInsights: true`. When they are missing, say so and never estimate them. `numbers: {}`
 means Instagram answered with none.
 
@@ -271,6 +291,8 @@ The same operations are REST routes on `https://api.smartgenius.app`, with the k
 | `list_posts`       | `GET /v1/profiles/{profile}/posts?status=scheduled` (several states as a comma list)                |
 | `list_media`       | `GET /v1/profiles/{profile}/media?limit=24`                                                         |
 | `list_suggestions` | `GET /v1/profiles/{profile}/suggestions`                                                            |
+| `get_insights`     | `GET /v1/profiles/{profile}/insights?days=28` |
+| `get_best_times`   | `GET /v1/profiles/{profile}/best-times?days=90&metric=totalInteractions` |
 | `get_routine`      | `GET /v1/profiles/{profile}/routine`                                                                |
 | `create_post`      | `POST /v1/profiles/{profile}/posts`                                                                 |
 | `get_post`         | `GET /v1/profiles/{profile}/posts/{id}?wait=30`                                                     |
