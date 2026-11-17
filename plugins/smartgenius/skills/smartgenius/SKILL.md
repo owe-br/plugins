@@ -1,6 +1,6 @@
 ---
 name: smartgenius
-description: "Make Instagram posts, carousels, stories, blog articles and standalone AI images with SmartGenius over its MCP tools (or its REST API). Use when the user asks to draft a post or carousel for one of their Instagram profiles, to draft a blog article for a profile that has a blog, to set up a profile for a brand with no Instagram, to make an image in a brand's style, or to generate any image at all from a prompt. Requires the smartgenius MCP server or a SmartGenius API key (setup guide: https://smartgenius.app/en/docs)."
+description: "Make Instagram posts, carousels, stories, blog articles and standalone AI images with SmartGenius over its MCP tools (or its REST API), and read what SmartGenius knows about a profile: its Instagram connection, what it learned, its posts and their numbers, its suggestions and its Autopilot. Use when the user asks to draft a post or carousel for one of their Instagram profiles, to see how their posts are doing or what is planned, to draft a blog article for a profile that has a blog, to set up a profile for a brand with no Instagram, to make an image in a brand's style, or to generate any image at all from a prompt. Requires the smartgenius MCP server or a SmartGenius API key (setup guide: https://smartgenius.app/en/docs)."
 ---
 
 # SmartGenius workflows
@@ -14,9 +14,77 @@ Two facts shape every call:
 
 - **Posts and articles land as drafts.** You can make one; you can never approve, schedule or
   publish it. A person does that in the studio, at its `studioUrl`. Always hand that link back.
-- **Everything costs credits from the monthly quota.** One credit is one image: one per slide of
-  a post, one per `generate_image` image. An article costs more (see below). A failed image is not
-  charged. `get_usage` shows what is left; check it before a large batch.
+- **Making things costs credits from the monthly quota.** One credit is one image: one per slide
+  of a post, one per `generate_image` image. An article costs more (see below). A failed image is
+  not charged. `get_usage` shows what is left; check it before a large batch. Reading costs
+  nothing (see "Read what SmartGenius knows").
+
+## Read what SmartGenius knows
+
+Seven tools only read. They spend no credits, change nothing and never reach Instagram, so call
+them whenever they help: before you plan a post, or when the user asks how a profile is doing or
+what is coming up. Each takes `profile`.
+
+- `get_profile`: the profile's `language` and `timezone`; `instagram` (`connected`, `username`,
+  `needsReconnect`, `canPublish`, `publishingEnabled`, `canReadInsights`, `connectedAt`); and
+  `learned`, what SmartGenius learned from its posts: `subjects` (each with a `weight` from 0 to
+  1), `captionTone`, `cadence`, `topHashtags` and `scannedAt`. `cadence` has `postsPerWeek` and
+  the `postingDays` and `postingHours` it posts most (hours in `timezone`): when it posts, not when
+  posting works best. When `needsReconnect` is true, tell the user to connect Instagram again in
+  the studio.
+- `list_posts`: the profile's posts, newest first, with `status` (`draft`, `ready` meaning
+  approved, `scheduled`, `publishing`, `published` or `failed`), `scheduledAt`, `publishedAt`,
+  `permalink` and `studioUrl`. Pass `status: ["scheduled"]` for what is booked to go out, `q` to
+  search, and `limit` (up to 50) with `offset` to page. `total` counts every match. Read one in
+  full with `get_post`.
+- `list_media`: the profile's own Instagram posts, newest first: `kind`, `postedAt`, `permalink`,
+  the first 300 characters of the `caption`, the `subjects` SmartGenius saw in the pictures, and
+  `numbers` (`reach`, `saved`, `shares`, `likes`, `comments`, `totalInteractions`, and `views` for
+  reels) as of `numbersAt`. `madeHere` marks a post made in SmartGenius. Page with `cursor` (the
+  `nextCursor` you got) and `limit` (up to 48, default 24). `connected: false` means the profile
+  has no working Instagram connection, and the list is empty.
+- `list_suggestions`: what the profile's own posts and numbers suggest next, strongest first. Each
+  one has a `kind` and its `facts`, never a sentence, so write the sentence yourself: `subject`
+  (`subject`, and `weeks` since it was last posted), `cadence` (`was` and `now`, posts a week in
+  the month before and in the last month), `format` (`posts` made without a single carousel),
+  `repeat_winner` (a post about `subject` got `times` the profile's usual `metric`) and `template`
+  (its post patterns were drafted from less than SmartGenius can read now). `postId` is set once a
+  suggestion became a post.
+- `get_routine`: the profile's Autopilot: `on`, its posting times (`rules`), `approval`
+  (`required` waits for a person's ok, `tacit` goes out unless someone steps in, `none` goes out
+  on its own), the saved `ideas` it uses first, the standing `instruction`, the next slots with
+  what it would post in each (`preview`), the posts waiting for an ok (`waitingIds`), and `gate`,
+  which says why it cannot run as set (null when it can). You cannot change Autopilot: send the
+  user to the studio for that.
+
+- `get_insights`: stored daily account totals over the last `days` (7, 28 or 90, default 28)
+  completed local days, in `timezone`. `days[]` has `reach`, `views`, `accountsEngaged`,
+  `totalInteractions`, `followsAndUnfollows`, `profileLinksTaps`, `followersCount`, `followsCount`
+  (accounts it follows), `mediaCount`, `follows` and `unfollows`. A missing number is null.
+  The last two stay unknown until Meta's breakdown is verified; never derive them from the
+  aggregate. `followers` has `now`, `asOf` (a local date), `change7d` and `change28d`; a change
+  needs saved counts exactly that many days apart. `available: false` is not zero:
+  `reason: not_connected` asks the person to connect again in the studio, `scope_missing` asks
+  them to reconnect with insights permission, `no_data_yet` means wait for the daily read
+  (Meta may lag 48 hours). Basic follower snapshots can exist without insights permission.
+  Do not sum daily reach as unique people across a week.
+- `get_best_times`: takes `days` (90 or 180, default 90) and `metric` (default
+  `totalInteractions`; also `reach`, `saved`, `shares`, `likes`, `comments`, `views`). With at
+  least 12 posts carrying that metric, `basis: engagement` means scores are average lifetime
+  counts per post. Below that floor, `basis: posting_times` only describes when the profile
+  posts, not what performs better. `sample` counts posts used. `byWeekday` uses 0=Sunday,
+  `byHour` uses 0..23 in `timezone`, and `best` holds up to three observed weekday/hour pairs.
+  Each bucket carries `sample` and `score`; an empty one has a null score. No posts means
+  `best: []`. Do not call these audience-online hours or promise a better result.
+
+**Numbers need Instagram's permission.** `numbers` is null for a post whose numbers SmartGenius
+never read. It refreshes them by the post's age, and only while `get_profile` says
+`canReadInsights: true`. When they are missing, say so and never estimate them. `numbers: {}`
+means Instagram answered with none.
+
+Example: to suggest the next post, call `get_profile`, `list_posts` with `status: ["scheduled"]`,
+`list_suggestions` and `get_routine`. Then propose an idea that fits the profile's `subjects` and
+does not repeat what is already booked.
 
 ## Make a post
 
@@ -216,17 +284,24 @@ A workspace admin can also make a key by hand under API and MCP and give it to y
 The same operations are REST routes on `https://api.smartgenius.app`, with the key as
 `Authorization: Bearer sg_…`:
 
-| MCP tool         | REST                                                                                                |
-| ---------------- | --------------------------------------------------------------------------------------------------- |
-| `list_profiles`  | `GET /v1/profiles`                                                                                  |
-| `create_post`    | `POST /v1/profiles/{profile}/posts`                                                                 |
-| `get_post`       | `GET /v1/profiles/{profile}/posts/{id}?wait=30`                                                     |
-| `create_article` | `POST /v1/profiles/{profile}/articles` (blogs only)                                                 |
-| `get_article`    | `GET /v1/profiles/{profile}/articles/{id}?wait=30` (blogs only)                                     |
-| `create_profile` | `POST /v1/profiles` (blogs only, admin only)                                                        |
-| `generate_image` | `POST /v1/images`                                                                                   |
-| `get_usage`      | `GET /v1/usage`                                                                                     |
-| -                | `GET /v1/profiles/{profile}/posts/{id}/export?size=4:5` (a zip: one JPEG per slide + `caption.txt`) |
+| MCP tool           | REST                                                                                                |
+| ------------------ | --------------------------------------------------------------------------------------------------- |
+| `list_profiles`    | `GET /v1/profiles`                                                                                  |
+| `get_profile`      | `GET /v1/profiles/{profile}`                                                                        |
+| `list_posts`       | `GET /v1/profiles/{profile}/posts?status=scheduled` (several states as a comma list)                |
+| `list_media`       | `GET /v1/profiles/{profile}/media?limit=24`                                                         |
+| `list_suggestions` | `GET /v1/profiles/{profile}/suggestions`                                                            |
+| `get_insights`     | `GET /v1/profiles/{profile}/insights?days=28` |
+| `get_best_times`   | `GET /v1/profiles/{profile}/best-times?days=90&metric=totalInteractions` |
+| `get_routine`      | `GET /v1/profiles/{profile}/routine`                                                                |
+| `create_post`      | `POST /v1/profiles/{profile}/posts`                                                                 |
+| `get_post`         | `GET /v1/profiles/{profile}/posts/{id}?wait=30`                                                     |
+| `create_article`   | `POST /v1/profiles/{profile}/articles` (blogs only)                                                 |
+| `get_article`      | `GET /v1/profiles/{profile}/articles/{id}?wait=30` (blogs only)                                     |
+| `create_profile`   | `POST /v1/profiles` (blogs only, admin only)                                                        |
+| `generate_image`   | `POST /v1/images`                                                                                   |
+| `get_usage`        | `GET /v1/usage`                                                                                     |
+| -                  | `GET /v1/profiles/{profile}/posts/{id}/export?size=4:5` (a zip: one JPEG per slide + `caption.txt`) |
 
 Success answers are `{ "data": … }`.
 
@@ -237,6 +312,8 @@ Success answers are `{ "data": … }`.
 - Never call `create_post` or `create_article` again to "retry" a slow one. Wait on the one you
   have.
 - Never call `create_post` for a profile with `hasInstagram: false`.
+- Never invent or estimate a number SmartGenius did not return. When `numbers` is null, say it has
+  not read them.
 - Never make a new profile to "retry" a `create_profile` that stopped halfway. Use the same
   `requestId`.
 - Never promise rankings, traffic or visitors from an article.
