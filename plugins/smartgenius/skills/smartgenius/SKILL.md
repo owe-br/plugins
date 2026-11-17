@@ -1,6 +1,6 @@
 ---
 name: smartgenius
-description: "Make Instagram posts, carousels, stories, blog articles and standalone AI images with SmartGenius over its MCP tools (or its REST API), and read what SmartGenius knows about a profile: its Instagram connection, what it learned, its posts and their numbers, its suggestions and its Autopilot. Use when the user asks to draft a post or carousel for one of their Instagram profiles, to see how their posts are doing or what is planned, to draft a blog article for a profile that has a blog, to set up a profile for a brand with no Instagram, to make an image in a brand's style, or to generate any image at all from a prompt. Requires the smartgenius MCP server or a SmartGenius API key (setup guide: https://smartgenius.app/en/docs)."
+description: "Use SmartGenius to draft Instagram posts, carousels, stories or blog articles, generate images with or without a brand profile, or set up a brand without Instagram. Read a profile's connection status, posting habits, post performance, suggestions and Autopilot schedule. When someone asks to connect or reconnect Instagram, get a private link for them to open. Requires the smartgenius MCP server or a SmartGenius REST API key (setup: https://smartgenius.app/en/docs)."
 ---
 
 # SmartGenius workflows
@@ -14,7 +14,7 @@ Two facts shape every call:
 
 - **Posts and articles land as drafts.** You can make one; you can never approve, schedule or
   publish it. A person does that in the studio, at its `studioUrl`. Always hand that link back.
-- **Making things costs credits from the monthly quota.** One credit is one image: one per slide
+- **Making content costs credits from the monthly quota.** One credit is one image: one per slide
   of a post, one per `generate_image` image. An article costs more (see below). A failed image is
   not charged. `get_usage` shows what is left; check it before a large batch. Reading costs
   nothing (see "Read what SmartGenius knows").
@@ -30,8 +30,8 @@ what is coming up. Each takes `profile`.
   `learned`, what SmartGenius learned from its posts: `subjects` (each with a `weight` from 0 to
   1), `captionTone`, `cadence`, `topHashtags` and `scannedAt`. `cadence` has `postsPerWeek` and
   the `postingDays` and `postingHours` it posts most (hours in `timezone`): when it posts, not when
-  posting works best. When `needsReconnect` is true, tell the user to connect Instagram again in
-  the studio.
+  posting works best. When `needsReconnect` is true, tell the user the account needs to be
+  reconnected. If they ask to reconnect it, use the steps under "Connect Instagram".
 - `list_posts`: the profile's posts, newest first, with `status` (`draft`, `ready` meaning
   approved, `scheduled`, `publishing`, `published` or `failed`), `scheduledAt`, `publishedAt`,
   `permalink` and `studioUrl`. Pass `status: ["scheduled"]` for what is booked to go out, `q` to
@@ -65,6 +65,32 @@ means Instagram answered with none.
 Example: to suggest the next post, call `get_profile`, `list_posts` with `status: ["scheduled"]`,
 `list_suggestions` and `get_routine`. Then propose an idea that fits the profile's `subjects` and
 does not repeat what is already booked.
+
+## Connect Instagram
+
+`get_instagram_connect_link({"profile":"forno.da.vila"})` returns `profile`, `url` and `expiresAt`.
+It costs no credits and returns no Instagram access token. Only the Espaço's owner or an admin
+can request it. Their account, admin access and the key that made the link must still be active
+when the connection finishes.
+
+1. Use `list_profiles` to choose the profile the user wants to connect. Request the link only
+   when they ask to connect or reconnect Instagram, never as part of an inventory read.
+2. For a reconnect, tell them to choose the same Instagram account. Approving a different account
+   replaces the connection and removes the previous account's imported data from SmartGenius.
+   Give them the private `url` and ask them to open it and complete Meta's approval themselves.
+   Do not open or approve it for them. Creating the link does not connect anything.
+3. The link expires at `expiresAt` (ISO 8601 UTC, currently ten minutes after creation). If it
+   expires, request a new link. A new call gets a current link; do not reuse an expired one.
+   If access was removed, ask a current workspace admin to start the connection instead.
+4. After they finish, call `get_profile` again to check the connection and insights access. A link
+   being opened or its window closing is not proof that the account is connected.
+
+The link reaches the connected app's company. Share it only with the person completing approval;
+never put it in logs, public posts or saved task notes. Meta returns the person to this profile's
+connection screen in the studio. Do not claim success from the link alone.
+
+For REST, use `POST /v1/profiles/{profile}/instagram/connect` with no body or `{}`.
+Send no `returnTo` or `requestId`; SmartGenius chooses the return screen.
 
 ## Make a post
 
@@ -204,17 +230,17 @@ after that: download them now if the user needs them later.
 A REST error is `{ "error": { "code", "message", "details" } }`. Over MCP the same object comes
 back with `isError: true`. Act on the code:
 
-| Code                            | What to do                                                                                                                                  |
-| ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
-| `UNAUTHORIZED`, `INVALID_TOKEN` | The sign-in or key is missing, revoked, or its maker left the Espaço. Ask the user to sign in again (or for a new key). Do not retry.       |
-| `FORBIDDEN`                     | The key's maker lacks the right in this Espaço (an approver cannot spend credits, and only an admin can `create_profile`). Tell the user; do not retry. |
-| `PAYMENT_REQUIRED`              | `create_profile`: the plan has no room for another profile. `details.upgrade` names the plan that does. Tell the user; waiting does not help.  |
-| `NOT_FOUND`                     | Wrong profile, post or article id. Run `list_profiles` and check the `@`. `create_article` also answers it for a profile with no blog. If every blog call answers it, the Espaço has no blogs yet: tell the user. |
-| `VALIDATION_ERROR`              | A field is wrong; `details` says which. Fix it and call again. Or the `requestId` was already used for a different request: make a new one. |
+| Code                            | What to do                                                                                                                                                                                                                                           |
+| ------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `UNAUTHORIZED`, `INVALID_TOKEN` | The sign-in or key is missing, revoked, or its maker left the Espaço. Ask the user to sign in again (or for a new key). Do not retry.                                                                                                                |
+| `FORBIDDEN`                     | The key's maker lacks the right in this Espaço (an approver cannot spend credits, and only an admin can `create_profile` or `get_instagram_connect_link`). Tell the user; do not retry.                                                              |
+| `PAYMENT_REQUIRED`              | `create_profile`: the plan has no room for another profile. `details.upgrade` names the plan that does. Tell the user; waiting does not help.                                                                                                        |
+| `NOT_FOUND`                     | Wrong profile, post or article id. Run `list_profiles` and check the `@`. `create_article` also answers it for a profile with no blog. If every blog call answers it, the Espaço has no blogs yet: tell the user.                                    |
+| `VALIDATION_ERROR`              | A field is wrong; `details` says which. Fix it and call again. Or the `requestId` was already used for a different request: make a new one.                                                                                                          |
 | `CONFLICT`                      | The first call with this `requestId` is still running: wait `retryAfterSecs`, then call again with the same `requestId`. After a `create_profile` that stopped halfway, `details` names the profile: call again with the same `requestId` to finish. |
-| `QUOTA_EXCEEDED`                | No credits left this month or today (an article needs 2, or 3 with a cover). Tell the user when they are back (`details.resetAt`). Do not retry before then. |
-| `RATE_LIMIT_EXCEEDED`           | Wait `retryAfterSecs` seconds, then retry once.                                                                                             |
-| `GENERATION_FAILED`             | The image model failed or refused the prompt. Nothing was charged. Retry once; if it refuses again, change the prompt.                      |
+| `QUOTA_EXCEEDED`                | No credits left this month or today (an article needs 2, or 3 with a cover). Tell the user when they are back (`details.resetAt`). Do not retry before then.                                                                                         |
+| `RATE_LIMIT_EXCEEDED`           | Wait `retryAfterSecs` seconds, then retry once.                                                                                                                                                                                                      |
+| `GENERATION_FAILED`             | The image model failed or refused the prompt. Nothing was charged. Retry once; if it refuses again, change the prompt.                                                                                                                               |
 
 ## Limits
 
@@ -264,22 +290,23 @@ A workspace admin can also make a key by hand under API and MCP and give it to y
 The same operations are REST routes on `https://api.smartgenius.app`, with the key as
 `Authorization: Bearer sg_…`:
 
-| MCP tool           | REST                                                                                                |
-| ------------------ | --------------------------------------------------------------------------------------------------- |
-| `list_profiles`    | `GET /v1/profiles`                                                                                  |
-| `get_profile`      | `GET /v1/profiles/{profile}`                                                                        |
-| `list_posts`       | `GET /v1/profiles/{profile}/posts?status=scheduled` (several states as a comma list)                |
-| `list_media`       | `GET /v1/profiles/{profile}/media?limit=24`                                                         |
-| `list_suggestions` | `GET /v1/profiles/{profile}/suggestions`                                                            |
-| `get_routine`      | `GET /v1/profiles/{profile}/routine`                                                                |
-| `create_post`      | `POST /v1/profiles/{profile}/posts`                                                                 |
-| `get_post`         | `GET /v1/profiles/{profile}/posts/{id}?wait=30`                                                     |
-| `create_article`   | `POST /v1/profiles/{profile}/articles` (blogs only)                                                 |
-| `get_article`      | `GET /v1/profiles/{profile}/articles/{id}?wait=30` (blogs only)                                     |
-| `create_profile`   | `POST /v1/profiles` (blogs only, admin only)                                                        |
-| `generate_image`   | `POST /v1/images`                                                                                   |
-| `get_usage`        | `GET /v1/usage`                                                                                     |
-| -                  | `GET /v1/profiles/{profile}/posts/{id}/export?size=4:5` (a zip: one JPEG per slide + `caption.txt`) |
+| MCP tool                     | REST                                                                                                |
+| ---------------------------- | --------------------------------------------------------------------------------------------------- |
+| `list_profiles`              | `GET /v1/profiles`                                                                                  |
+| `get_profile`                | `GET /v1/profiles/{profile}`                                                                        |
+| `get_instagram_connect_link` | `POST /v1/profiles/{profile}/instagram/connect` (admin only)                                        |
+| `list_posts`                 | `GET /v1/profiles/{profile}/posts?status=scheduled` (several states as a comma list)                |
+| `list_media`                 | `GET /v1/profiles/{profile}/media?limit=24`                                                         |
+| `list_suggestions`           | `GET /v1/profiles/{profile}/suggestions`                                                            |
+| `get_routine`                | `GET /v1/profiles/{profile}/routine`                                                                |
+| `create_post`                | `POST /v1/profiles/{profile}/posts`                                                                 |
+| `get_post`                   | `GET /v1/profiles/{profile}/posts/{id}?wait=30`                                                     |
+| `create_article`             | `POST /v1/profiles/{profile}/articles` (blogs only)                                                 |
+| `get_article`                | `GET /v1/profiles/{profile}/articles/{id}?wait=30` (blogs only)                                     |
+| `create_profile`             | `POST /v1/profiles` (blogs only, admin only)                                                        |
+| `generate_image`             | `POST /v1/images`                                                                                   |
+| `get_usage`                  | `GET /v1/usage`                                                                                     |
+| -                            | `GET /v1/profiles/{profile}/posts/{id}/export?size=4:5` (a zip: one JPEG per slide + `caption.txt`) |
 
 Success answers are `{ "data": … }`.
 
