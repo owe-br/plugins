@@ -70,17 +70,20 @@ does not repeat what is already booked.
 
 `get_instagram_connect_link({"profile":"forno.da.vila"})` returns `profile`, `url` and `expiresAt`.
 It costs no credits and returns no Instagram access token. Only the Espaço's owner or an admin
-can request it, and that person must still have an active account and admin access when the
-connection finishes.
+can request it. Their account, admin access and the key that made the link must still be active
+when the connection finishes.
 
 1. Use `list_profiles` to choose the profile the user wants to connect. Request the link only
    when they ask to connect or reconnect Instagram, never as part of an inventory read.
-2. Tell the user that completing approval can replace the profile's current Instagram connection.
+2. For a reconnect, tell them to choose the same Instagram account. Approving a different account
+   replaces the connection and removes the previous account's imported data from SmartGenius.
    Give them the private `url` and ask them to open it and complete Meta's approval themselves.
    Do not open or approve it for them. Creating the link does not connect anything.
 3. The link expires at `expiresAt` (ISO 8601 UTC, currently ten minutes after creation). If it
    expires, request a new link. A new call gets a current link; do not reuse an expired one.
    If access was removed, ask a current workspace admin to start the connection instead.
+4. After they finish, call `get_profile` again to check the connection and insights access. A link
+   being opened or its window closing is not proof that the account is connected.
 
 The link reaches the connected app's company. Share it only with the person completing approval;
 never put it in logs, public posts or saved task notes. Meta returns the person to this profile's
