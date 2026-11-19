@@ -1,6 +1,6 @@
 ---
 name: smartgenius
-description: "Use SmartGenius to draft Instagram posts, carousels, stories or blog articles, generate images with or without a brand profile, or set up a brand without Instagram. Read a profile's connection status, posting habits, post performance, suggestions and Autopilot schedule. When someone asks to connect or reconnect Instagram, get a private link for them to open. Requires the smartgenius MCP server or a SmartGenius REST API key (setup: https://smartgenius.app/en/docs)."
+description: "Use SmartGenius to draft Instagram posts, carousels, stories, reels or blog articles, generate images with or without a brand profile, or set up a brand without Instagram. Read a profile's connection status, posting habits, post performance, suggestions and Autopilot schedule. When someone asks to connect or reconnect Instagram, get a private link for them to open. Requires the smartgenius MCP server or a SmartGenius REST API key (setup: https://smartgenius.app/en/docs)."
 ---
 
 # SmartGenius workflows
@@ -15,11 +15,13 @@ account or blog" below).
 Two facts shape every call:
 
 - **Posts and articles land as drafts.** You can make one; you can never approve, schedule or
-  publish it. A person does that in the studio, at its `studioUrl`. Always hand that link back.
+  publish it, or make a reel's video. A person does that in the studio, at its `studioUrl`.
+  Always hand that link back.
 - **Making content costs credits from the monthly quota.** One credit is one image: one per slide
-  of a post, one per `generate_image` image. An article costs more (see below). A failed image is
-  not charged. `get_usage` shows what is left; check it before a large batch. Reading costs
-  nothing (see "Read what SmartGenius knows").
+  of a post or scene of a reel, one per `generate_image` image. A reel's video costs more, later
+  (see "A reel" below). An article costs more (see below). A failed image is not charged.
+  `get_usage` shows what is left; check it before a large batch. Reading costs nothing (see
+  "Read what SmartGenius knows").
 
 ## Read what SmartGenius knows
 
@@ -128,16 +130,30 @@ Send no `returnTo` or `requestId`; SmartGenius chooses the return screen.
    If `list_brands` shows the brand with more than one Instagram account, ask which one and pass
    its `id` as `instagram`.
 2. `create_post` with `profile`, `idea` (a sentence or a paragraph: what the post is about) and
-   a `requestId` you make up (a new UUID). Optional: `format` (`carousel` by default, `post` or
-   `story`), `slides` (carousel only), `objective`, `tone`, `cta`, `instagram`, and `links` (up to 5 pages SmartGenius
+   a `requestId` you make up (a new UUID). Optional: `format` (`carousel` by default, `post`,
+   `story` or `reel`), `slides` (a carousel's slides or a reel's scenes), `seconds` (a reel's
+   limit, 30 or 60), `objective`, `tone`, `cta`, `instagram`, and `links` (up to 5 pages SmartGenius
    reads before planning). It answers at once with the post's `id`, before anything is drawn.
    No idea yet? Send `research: true` instead of `idea` (see "No idea yet" below).
 3. `get_post` with `profile` (the one the `create_post` answer gave), `postId` (that `id`) and `wait: 30`. Repeat while `making.status` is `queued` or
    `running`. A carousel takes a few minutes; tell the user it is on its way instead of going
    quiet.
-4. When it is `done`, show the user the slides' text, the caption and the `studioUrl`. If it
-   `failed`, say so with `making.failure` and offer to try again. `cancelled` means a person
-   stopped it in the studio: leave it.
+4. When it is `done`, show the user the slides' text, the caption and the `studioUrl`. For a reel,
+   show each scene's `narration` too. If it `failed`, say so with `making.failure` and offer to
+   try again. `cancelled` means a person stopped it in the studio: leave it.
+
+**A reel.** `create_post` with `format: reel` makes the scenes, their narration and the caption,
+the same reel the studio's create page makes. `seconds` is the video's limit: 30 (the default) or
+60. `slides` is the number of scenes; leave it out and you get 5 for 30 seconds or 10 for 60. The
+scenes cost what slides do. This call does not make the video, and no tool does: once the reel is
+`done`, tell the user to open the `studioUrl`, check each scene's narration and make the video
+there. That uses 1 more credit for 30 seconds or 2 for 60. For a reel, `get_post` also answers
+`video`: `standing` is `missing` (not made yet), `behind` (the video no longer matches the reel: a
+scene, the voice, the logo, the colors or the @ changed since it was made), `current` or `failed`
+(`tooLong` means the narration ran over the limit, and the user shortens it in the studio).
+`freeReRecordingsLeft` counts the voice re-recordings still included. Once the scenes are made,
+`making` can be a video take the user started in the studio: a take that failed shows in `video`
+too, and it is never a reason to call `create_post` again.
 
 **No idea yet.** `create_post` and `create_article` take `research: true` in place of `idea`:
 SmartGenius picks the subject itself, the one its own schedule would pick now (the profile's
@@ -348,6 +364,8 @@ Success answers are `{ "data": … }`.
 
 - Never tell the user a post or an article was published or scheduled. It is a draft until a
   person acts on it.
+- Never tell the user a reel's video is ready unless `get_post` says `video.standing` is
+  `current`. Only a person makes it, in the studio.
 - Never call `create_post` or `create_article` again to "retry" a slow one. Wait on the one you
   have.
 - Never call `create_post` for a profile with `hasInstagram: false`.
