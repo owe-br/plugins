@@ -149,8 +149,10 @@ scenes cost what slides do. This call does not make the video, and no tool does:
 `done`, tell the user to open the `studioUrl`, check each scene's narration and make the video
 there. That uses 1 more credit for 30 seconds or 2 for 60. For a reel, `get_post` also answers
 `video`: `standing` is `missing` (not made yet), `behind` (the video no longer matches the reel: a
-scene, the voice, the logo, the colors or the @ changed since it was made), `current` or `failed`
-(`tooLong` means the narration ran over the limit, and the user shortens it in the studio).
+scene, the voice, the logo, the colors or the @ changed since it was made), `current` or `failed`.
+`tooLong` means the saved words are expected to run over the limit in this voice, or the last take
+ran over. It can be true before anyone records. In the studio the user can shorten a scene or
+switch voices if the studio offers one that fits.
 `freeReRecordingsLeft` counts the voice re-recordings still included. Once the scenes are made,
 `making` can be a video take the user started in the studio: a take that failed shows in `video`
 too, and it is never a reason to call `create_post` again.
