@@ -8,7 +8,9 @@ description: "Use SmartGenius to draft Instagram posts, carousels, stories or bl
 SmartGenius is a social media manager for Instagram. A key belongs to one **Espaço** (workspace)
 and acts as the person who made it. The Espaço holds one or more **profiles**, each with its own
 voice, colors and visual style. Most are Instagram accounts. A profile can also be a brand with no
-Instagram, and some profiles have a **blog** (see "Blogs" below).
+Instagram, and some profiles have a **blog** (see "Blogs" below). A profile is a brand, and a
+brand can publish to more than one Instagram account or blog (see "A brand with more than one
+account or blog" below).
 
 Two facts shape every call:
 
@@ -66,6 +68,30 @@ Example: to suggest the next post, call `get_profile`, `list_posts` with `status
 `list_suggestions` and `get_routine`. Then propose an idea that fits the profile's `subjects` and
 does not repeat what is already booked.
 
+`list_brands` also only reads, and takes no `profile`: every brand of the Espaço with its
+`profile` and the places it publishes to (`destinations`). Each Instagram account has `kind`,
+`id`, `name`, `connected` and `needsReconnect`; each blog has `kind`, `id`, `name`, `url` and
+`state`.
+
+## A brand with more than one account or blog
+
+Most brands have one Instagram account and at most one blog, and every call works with just
+`profile`. When `list_brands` shows a brand with two or more accounts, or two or more blogs, name
+the one the user means:
+
+- `create_post` takes `instagram`: the account's `id` from `list_brands`.
+- `create_article` takes `blogId`: the blog's `id` from `list_brands`.
+
+If the user did not say which, ask them. Never pick one yourself. A call that names none when
+there are several answers `VALIDATION_ERROR`, and `details.choices` lists each place (`kind`,
+`id`, `name`): nothing was made and nothing was charged. Ask the user which one, then call again
+with its `id` and the same `requestId`.
+
+The draft lives on that place. The `create_post` or `create_article` answer says where it went
+(`destination`) and gives a `profile` to read it back with: the handle for the brand's own place,
+or an id for one of its other places. Use that `profile` for `get_post` and `get_article`, and
+hand the user the answer's `studioUrl`.
+
 ## Connect Instagram
 
 `get_instagram_connect_link({"profile":"forno.da.vila"})` returns `profile`, `url` and `expiresAt`.
@@ -74,7 +100,9 @@ can request it. Their account, admin access and the key that made the link must 
 when the connection finishes.
 
 1. Use `list_profiles` to choose the profile the user wants to connect. Request the link only
-   when they ask to connect or reconnect Instagram, never as part of an inventory read.
+   when they ask to connect or reconnect Instagram, never as part of an inventory read. To
+   connect one of a brand's other accounts, pass that account's `id` from `list_brands` as
+   `profile`.
 2. For a reconnect, tell them to choose the same Instagram account. Approving a different account
    replaces the connection and removes the previous account's imported data from SmartGenius.
    Give them the private `url` and ask them to open it and complete Meta's approval themselves.
@@ -97,12 +125,14 @@ Send no `returnTo` or `requestId`; SmartGenius chooses the return screen.
 1. `list_profiles`: pick the profile. If there is more than one and the user did not name one,
    ask which. Every other tool takes its `profile` (with or without the `@`). Posts need a
    profile with `hasInstagram: true`: `create_post` refuses any other, before it charges anything.
+   If `list_brands` shows the brand with more than one Instagram account, ask which one and pass
+   its `id` as `instagram`.
 2. `create_post` with `profile`, `idea` (a sentence or a paragraph: what the post is about) and
    a `requestId` you make up (a new UUID). Optional: `format` (`carousel` by default, `post` or
-   `story`), `slides` (carousel only), `objective`, `tone`, `cta`, and `links` (up to 5 pages SmartGenius
+   `story`), `slides` (carousel only), `objective`, `tone`, `cta`, `instagram`, and `links` (up to 5 pages SmartGenius
    reads before planning). It answers at once with the post's `id`, before anything is drawn.
    No idea yet? Send `research: true` instead of `idea` (see "No idea yet" below).
-3. `get_post` with `profile`, `postId` (that `id`) and `wait: 30`. Repeat while `making.status` is `queued` or
+3. `get_post` with `profile` (the one the `create_post` answer gave), `postId` (that `id`) and `wait: 30`. Repeat while `making.status` is `queued` or
    `running`. A carousel takes a few minutes; tell the user it is on its way instead of going
    quiet.
 4. When it is `done`, show the user the slides' text, the caption and the `studioUrl`. If it
@@ -130,13 +160,15 @@ no Instagram: its `profile` is only its name in SmartGenius, never an `@`.
 
 ## Make a blog article
 
-1. `list_profiles`: pick a profile whose `blog` is not null.
+1. `list_profiles`: pick a profile whose `blog` is not null. If `list_brands` shows the brand
+   with more than one blog, ask which one and pass its `id` as `blogId`.
 2. `create_article` with `profile`, `idea` (what the article is about, up to 2,000 characters)
    and a `requestId` you make up. It answers at once, with the article's `id` and `credits`
    (what the call cost), before anything is written. No idea yet? Send `research: true`
    instead of `idea` (see "No idea yet" below).
-3. `get_article` with `profile`, `articleId` (that `id`) and `wait: 30`. Repeat while
-   `making.status` is `queued` or `running`. An article takes a few minutes.
+3. `get_article` with `profile` (the one the `create_article` answer gave), `articleId` (that
+   `id`) and `wait: 30`. Repeat while `making.status` is `queued` or `running`. An article takes
+   a few minutes.
 4. When `making.status` is `succeeded`, show the user the `title`, the `dek`, the `body` and the
    `studioUrl`. If it is `failed`, say so with `making.failure` and offer to try again; credits
    that went unused are refunded. `cancelled` means the run was stopped: leave it.
@@ -157,8 +189,9 @@ Optional fields of `create_article`:
 - `fromPostId`: the id of a post on this profile to build the article from. Its links come along
   and count against the 3.
 - `ideaId`: the id of an idea saved on this profile's blog. The idea is used up.
-- `blogId`: the blog's `id` from `list_profiles`. The call is refused, before it charges, if the
-  profile's blog was replaced since you read it.
+- `blogId`: the blog's `id` from `list_profiles` or `list_brands`. Required when the brand has
+  more than one blog. The call is refused, before it charges, if the brand no longer has that
+  blog.
 
 **One article, one `requestId`.** Same rule as a post: after a timeout or a lost answer, call
 `create_article` again with the SAME `requestId` and you get the first article back, with nothing
@@ -230,17 +263,17 @@ after that: download them now if the user needs them later.
 A REST error is `{ "error": { "code", "message", "details" } }`. Over MCP the same object comes
 back with `isError: true`. Act on the code:
 
-| Code                            | What to do                                                                                                                                                                                                                                           |
-| ------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `UNAUTHORIZED`, `INVALID_TOKEN` | The sign-in or key is missing, revoked, or its maker left the Espaço. Ask the user to sign in again (or for a new key). Do not retry.                                                                                                                |
-| `FORBIDDEN`                     | The key's maker lacks the right in this Espaço (an approver cannot spend credits, and only an admin can `create_profile` or `get_instagram_connect_link`). Tell the user; do not retry.                                                              |
-| `PAYMENT_REQUIRED`              | `create_profile`: the plan has no room for another profile. `details.upgrade` names the plan that does. Tell the user; waiting does not help.                                                                                                        |
-| `NOT_FOUND`                     | Wrong profile, post or article id. Run `list_profiles` and check the `@`. `create_article` also answers it for a profile with no blog. If every blog call answers it, the Espaço has no blogs yet: tell the user.                                    |
-| `VALIDATION_ERROR`              | A field is wrong; `details` says which. Fix it and call again. Or the `requestId` was already used for a different request: make a new one.                                                                                                          |
-| `CONFLICT`                      | The first call with this `requestId` is still running: wait `retryAfterSecs`, then call again with the same `requestId`. After a `create_profile` that stopped halfway, `details` names the profile: call again with the same `requestId` to finish. |
-| `QUOTA_EXCEEDED`                | No credits left this month or today (an article needs 2, or 3 with a cover). Tell the user when they are back (`details.resetAt`). Do not retry before then.                                                                                         |
-| `RATE_LIMIT_EXCEEDED`           | Wait `retryAfterSecs` seconds, then retry once.                                                                                                                                                                                                      |
-| `GENERATION_FAILED`             | The image model failed or refused the prompt. Nothing was charged. Retry once; if it refuses again, change the prompt.                                                                                                                               |
+| Code                            | What to do                                                                                                                                                                                                                                                                |
+| ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `UNAUTHORIZED`, `INVALID_TOKEN` | The sign-in or key is missing, revoked, or its maker left the Espaço. Ask the user to sign in again (or for a new key). Do not retry.                                                                                                                                     |
+| `FORBIDDEN`                     | The key's maker lacks the right in this Espaço (an approver cannot spend credits, and only an admin can `create_profile` or `get_instagram_connect_link`). Tell the user; do not retry.                                                                                   |
+| `PAYMENT_REQUIRED`              | `create_profile`: the plan has no room for another profile. `details.upgrade` names the plan that does. Tell the user; waiting does not help.                                                                                                                             |
+| `NOT_FOUND`                     | Wrong profile, post or article id. Run `list_profiles` and check the `@`. `create_article` also answers it for a profile with no blog. If every blog call answers it, the Espaço has no blogs yet: tell the user.                                                         |
+| `VALIDATION_ERROR`              | A field is wrong; `details` says which. Fix it and call again. Or the `requestId` was already used for a different request: make a new one. When `details.choices` lists accounts or blogs, ask the user which one and call again with its `id`; never pick one yourself. |
+| `CONFLICT`                      | The first call with this `requestId` is still running: wait `retryAfterSecs`, then call again with the same `requestId`. After a `create_profile` that stopped halfway, `details` names the profile: call again with the same `requestId` to finish.                      |
+| `QUOTA_EXCEEDED`                | No credits left this month or today (an article needs 2, or 3 with a cover). Tell the user when they are back (`details.resetAt`). Do not retry before then.                                                                                                              |
+| `RATE_LIMIT_EXCEEDED`           | Wait `retryAfterSecs` seconds, then retry once.                                                                                                                                                                                                                           |
+| `GENERATION_FAILED`             | The image model failed or refused the prompt. Nothing was charged. Retry once; if it refuses again, change the prompt.                                                                                                                                                    |
 
 ## Limits
 
@@ -293,6 +326,7 @@ The same operations are REST routes on `https://api.smartgenius.app`, with the k
 | MCP tool                     | REST                                                                                                |
 | ---------------------------- | --------------------------------------------------------------------------------------------------- |
 | `list_profiles`              | `GET /v1/profiles`                                                                                  |
+| `list_brands`                | `GET /v1/brands`                                                                                    |
 | `get_profile`                | `GET /v1/profiles/{profile}`                                                                        |
 | `get_instagram_connect_link` | `POST /v1/profiles/{profile}/instagram/connect` (admin only)                                        |
 | `list_posts`                 | `GET /v1/profiles/{profile}/posts?status=scheduled` (several states as a comma list)                |
@@ -317,6 +351,7 @@ Success answers are `{ "data": … }`.
 - Never call `create_post` or `create_article` again to "retry" a slow one. Wait on the one you
   have.
 - Never call `create_post` for a profile with `hasInstagram: false`.
+- Never pick one of a brand's accounts or blogs for the user. When there are several, ask.
 - Never invent or estimate a number SmartGenius did not return. When `numbers` is null, say it has
   not read them.
 - Never make a new profile to "retry" a `create_profile` that stopped halfway. Use the same
