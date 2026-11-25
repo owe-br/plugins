@@ -77,9 +77,9 @@ does not repeat what is already booked.
 
 ## Read traffic and advertising results
 
-Call `list_report_sources({})` to see the sources an admin shared with this app or key. An empty list means no sources are available to this app. It does not mean the brand spent nothing or had no visitors. An admin connects the provider in Channels, then chooses the sources this app can read under API and MCP. Never ask for the advertiser's token or password.
+Call `list_report_sources({})` to see the sources an admin shared with this app or key. An empty list means no sources are available to this app. It does not mean the brand spent nothing or had no visitors. An admin connects the provider in Channels, then chooses the sources this app can read under API and MCP. No reports are shared by default. An app may keep the figures it already received even after the admin removes access. Never ask for the advertiser's token or password.
 
-Pass the `sourceId` to `get_report` using the `id` from the list. If more than one source matches, ask which one the user means. This reads a saved report without spending credits. Quote the dates returned, currency and last update. Use `nextOffset` for more rows. If a value or the report is missing, say so. Video counts at the last reading are not daily views. A pixel counts events; an ads report counts conversions the platform attributes to its ads. Do not add those together, mix currencies or sum daily unique visitors. These tools cannot change an ad, install a pixel or share a source with another app.
+Call `get_report({"sourceId":"<id from the list>"})`. If more than one source matches, ask which one the user means. The default covers seven complete days, or the latest counts for TikTok videos. A missing or unshared ID gets the same `NOT_FOUND`; list the available sources again. This reads a saved report without spending credits. Quote the dates returned, currency and last update. Use `nextOffset` for more rows. If a value or the report is missing, say so. Video counts at the last reading are not daily views. A pixel counts events; an ads report counts conversions the platform attributes to its ads. Do not add those together, mix currencies or sum daily unique visitors. These tools cannot change an ad, install a pixel or share a source with another app.
 
 ## A brand with more than one account or blog
 
@@ -131,7 +131,7 @@ Send no `returnTo` or `requestId`; SmartGenius chooses the return screen.
 ## Make a post
 
 1. `list_profiles`: pick the profile. If there is more than one and the user did not name one,
-   ask which. Every other tool takes its `profile` (with or without the `@`). Posts need a
+   ask which. To make a post, pass its `profile` (with or without the `@`). Posts need a
    profile with `hasInstagram: true`: `create_post` refuses any other, before it charges anything.
    If `list_brands` shows the brand with more than one Instagram account, ask which one and pass
    its `id` as `instagram`.
