@@ -1,6 +1,6 @@
 ---
 name: smartgenius
-description: "Use SmartGenius to draft Instagram posts, carousels, stories, reels or blog articles, generate images with or without a brand profile, or set up a brand without Instagram. Read a profile's connection status, posting habits, post performance, suggestions and Autopilot schedule. When someone asks to connect or reconnect Instagram, get a private link for them to open. Requires the smartgenius MCP server or a SmartGenius REST API key (setup: https://smartgenius.app/en/docs)."
+description: "Use SmartGenius to draft Instagram posts, carousels, stories, reels or blog articles, generate images with or without a brand profile, or set up a brand without Instagram. Read authorized Google Analytics, Google Ads, Meta and TikTok reports. Read a profile's connection status, posting habits, post performance, suggestions and Autopilot schedule. When someone asks to connect or reconnect Instagram, get a private link for them to open. Requires the smartgenius MCP server or a SmartGenius REST API key (setup: https://smartgenius.app/en/docs)."
 ---
 
 # SmartGenius workflows
@@ -74,6 +74,12 @@ does not repeat what is already booked.
 `profile` and the places it publishes to (`destinations`). Each Instagram account has `kind`,
 `id`, `name`, `connected` and `needsReconnect`; each blog has `kind`, `id`, `name`, `url` and
 `state`.
+
+## Read traffic and advertising results
+
+Call `list_report_sources({})` to see the sources an admin shared with this app or key. An empty list means no sources are available to this app. It does not mean the brand spent nothing or had no visitors. An admin connects the provider in Channels, then chooses the sources this app can read under API and MCP. Never ask for the advertiser's token or password.
+
+Pass the `sourceId` to `get_report` using the `id` from the list. If more than one source matches, ask which one the user means. This reads a saved report without spending credits. Quote the dates returned, currency and last update. Use `nextOffset` for more rows. If a value or the report is missing, say so. Video counts at the last reading are not daily views. A pixel counts events; an ads report counts conversions the platform attributes to its ads. Do not add those together, mix currencies or sum daily unique visitors. These tools cannot change an ad, install a pixel or share a source with another app.
 
 ## A brand with more than one account or blog
 
@@ -345,6 +351,8 @@ The same operations are REST routes on `https://api.smartgenius.app`, with the k
 | ---------------------------- | --------------------------------------------------------------------------------------------------- |
 | `list_profiles`              | `GET /v1/profiles`                                                                                  |
 | `list_brands`                | `GET /v1/brands`                                                                                    |
+| `list_report_sources`        | `GET /v1/report-sources`                                                                            |
+| `get_report`                 | `GET /v1/report-sources/{sourceId}/report`                                                          |
 | `get_profile`                | `GET /v1/profiles/{profile}`                                                                        |
 | `get_instagram_connect_link` | `POST /v1/profiles/{profile}/instagram/connect` (admin only)                                        |
 | `list_posts`                 | `GET /v1/profiles/{profile}/posts?status=scheduled` (several states as a comma list)                |
