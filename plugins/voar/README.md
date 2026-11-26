@@ -34,6 +34,8 @@ codex plugin add voar@owe-br
 
 ## Sign in
 
+Your MCP client can see what the tools do before you sign in. Sign in or use an API key to run a tool.
+
 In Claude Code, type `/mcp`, choose voar and Authenticate. In Codex 0.147 or later, run
 `codex mcp login voar`. The browser opens app.voar.dev. Sign in with GitHub, pick the organization,
 check the app's name and return address, and press Connect organization.

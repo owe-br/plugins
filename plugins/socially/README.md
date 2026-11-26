@@ -40,6 +40,8 @@ codex plugin add socially@owe-br
 
 ## Sign in
 
+Your MCP client can see the tools at `/mcp/store` before you sign in. It still needs access to run them.
+
 In Claude Code, type `/mcp`, choose socially and Authenticate. In Codex 0.147 or later, run
 `codex mcp login socially`. The browser opens console.socially.run. Sign in, check the app's name
 and return address, and approve the connection.
