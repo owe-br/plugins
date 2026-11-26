@@ -3,7 +3,7 @@
   "name": "app.featury/featury",
   "title": "featury",
   "description": "Ask what your product does, triage requests and publish the changelog, from a map of your code.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "websiteUrl": "https://featury.app/en/docs/mcp",
   "icons": [
     { "src": "https://featury.app/icon-512.png", "mimeType": "image/png", "sizes": ["512x512"] },

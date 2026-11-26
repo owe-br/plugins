@@ -30,6 +30,8 @@ codex plugin add featury@owe-br
 
 ## Sign in
 
+Your MCP client can see the tool list before you sign in. To use a tool, connect an account or use an API key.
+
 In Claude Code, type `/mcp`, pick featury and choose Authenticate. In Codex, run
 `codex mcp login featury`. This needs Codex 0.147 or later: older versions stop with "missing
 required issuer". Update with `npm install -g @openai/codex@latest`, then sign in again.
