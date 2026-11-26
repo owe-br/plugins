@@ -3,8 +3,8 @@
   "name": "dev.pncp/pncp",
   "title": "pncp.dev",
   "description": "Query Brazil's public procurement portal (PNCP): tenders, contracts and price records.",
-  "version": "1.0.0",
-  "websiteUrl": "https://pncp.dev/docs#mcp",
+  "version": "1.0.1",
+  "websiteUrl": "https://pncp.dev/docs/mcp",
   "icons": [
     {
       "src": "https://pncp.dev/icon-512.png",

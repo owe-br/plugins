@@ -37,6 +37,8 @@ codex plugin add pncp@owe-br
 
 ## Sign in
 
+Your MCP client can see the tool list without an account. Sign in to use any tool.
+
 In Claude Code, type `/mcp`, choose pncp and Authenticate. In Codex 0.147 or later, run
 `codex mcp login pncp`. The browser opens pncp.dev. Sign in, check the app's name and return
 address, and press Conectar.
