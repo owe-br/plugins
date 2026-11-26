@@ -3,7 +3,7 @@
   "name": "run.socially/socially",
   "title": "socially.run",
   "description": "Read public social profiles and posts, and search videos, news and trends.",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "websiteUrl": "https://socially.run/docs/en/mcp",
   "icons": [
     {

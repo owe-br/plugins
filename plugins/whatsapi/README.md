@@ -33,6 +33,8 @@ codex plugin add whatsapi@owe-br
 
 ## Sign in
 
+Your MCP client can see what the tools do before you sign in. Sign in or use an API key to run a tool.
+
 In Claude Code, type `/mcp`, pick whatsapi and choose Authenticate. In Codex, run
 `codex mcp login whatsapi`. This needs Codex 0.147 or later: older versions stop with "missing
 required issuer". Update with `npm install -g @openai/codex@latest`, then sign in again.

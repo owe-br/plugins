@@ -3,8 +3,8 @@
   "name": "dev.voar/voar",
   "title": "voar",
   "description": "Read your organization's GitHub Actions jobs and usage on voar. Read-only.",
-  "version": "1.0.0",
-  "websiteUrl": "https://voar.dev/en/docs#api",
+  "version": "1.0.1",
+  "websiteUrl": "https://voar.dev/en/docs/mcp",
   "icons": [
     {
       "src": "https://voar.dev/web-app-manifest-512x512.png",

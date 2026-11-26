@@ -30,6 +30,8 @@ does not make them available. It does not attach files to outgoing email or prov
 
 ## Connect and sign in
 
+Your MCP client can see what the tools do before you sign in. Sign in or use an API key to run a tool.
+
 Add `https://api.colding.app/mcp` as a remote MCP server in your app. When it asks you to sign in,
 check that the page is at `https://console.colding.app/auth/authorize`. Use your existing colding
 account and pick a workspace you own. Check the app's name and return address, choose only the

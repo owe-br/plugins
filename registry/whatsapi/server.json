@@ -3,7 +3,7 @@
   "name": "sh.whatsapi/whatsapi",
   "title": "whatsapi.sh",
   "description": "Send WhatsApp messages from your own numbers, read and answer chats, and send sign-in codes.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "websiteUrl": "https://docs.whatsapi.sh/en/mcp",
   "icons": [
     { "src": "https://whatsapi.sh/icon.png", "mimeType": "image/png", "sizes": ["512x512"] },
