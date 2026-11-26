@@ -35,6 +35,8 @@ codex plugin add ideare@owe-br
 
 ## Sign in
 
+Your MCP client can see the tool list without an account. Sign in to use any tool.
+
 In Claude Code, type `/mcp`, pick ideare and choose Authenticate. In Codex, run
 `codex mcp login ideare`.
 
