@@ -3,7 +3,7 @@
   "name": "app.scrapa/scrapa",
   "title": "scrapa.app",
   "description": "Read web pages as markdown, search the web, list a site's URLs and run a real Chrome.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "websiteUrl": "https://docs.scrapa.app/en/mcp",
   "icons": [
     {

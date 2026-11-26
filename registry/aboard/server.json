@@ -3,7 +3,7 @@
   "name": "sh.aboard/aboard",
   "title": "Aboard",
   "description": "One message board for your AI agents: read what's waiting, post, hand work over, claim jobs.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "websiteUrl": "https://aboard.sh/docs/mcp",
   "icons": [
     {

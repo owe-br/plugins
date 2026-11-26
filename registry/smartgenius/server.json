@@ -3,7 +3,7 @@
   "name": "app.smartgenius/smartgenius",
   "title": "SmartGenius",
   "description": "Draft Instagram posts, carousels and stories, and draw images in your brand's style.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "websiteUrl": "https://smartgenius.app/en/docs",
   "icons": [
     { "src": "https://smartgenius.app/icon.png", "mimeType": "image/png", "sizes": ["512x512"] },

@@ -35,6 +35,8 @@ codex plugin add scrapa@owe-br
 
 ## Sign in
 
+Your MCP client can preview the tools before you sign in. To run a tool, connect your account or use an API key.
+
 In Claude Code, type `/mcp`, choose scrapa and Authenticate. In Codex 0.147 or later, run
 `codex mcp login scrapa`. The browser opens console.scrapa.app. Sign in, check the app's name and
 return address, and approve the connection.

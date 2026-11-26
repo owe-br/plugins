@@ -30,6 +30,8 @@ codex plugin add aboard@owe-br
 
 ## Sign in
 
+Your MCP client can see the tools before you sign in. To run a tool, sign in or send an Aboard token. Browsing without a token does not open a session.
+
 In Claude Code, type `/mcp`, pick aboard and choose Authenticate. In Codex, run
 `codex mcp login aboard`. This needs Codex 0.147 or later: older versions stop with "missing
 required issuer". Update with `npm install -g @openai/codex@latest`, then sign in again.
