@@ -37,6 +37,8 @@ codex plugin add smartgenius@owe-br
 
 ## Sign in
 
+Your MCP client can preview the tools before you sign in. To run a tool, connect your account or use an API key.
+
 In Claude Code, type `/mcp`, pick smartgenius and choose Authenticate. In Codex, run
 `codex mcp login smartgenius` (Codex 0.147 or later; update with
 `npm install -g @openai/codex@latest`).
